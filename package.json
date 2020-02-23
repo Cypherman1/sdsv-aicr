@@ -1,0 +1,30 @@
+{
+  "name": "sdsrv-aicr",
+  "version": "1.0.0",
+  "description": "Powerful character recognize solution",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon index.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install-all": "yarn install && cd ./client && yarn install"
+  },
+  "author": "SDSRV",
+  "license": "ISC",
+  "dependencies": {
+    "@ant-design/pro-layout": "^4.10.1",
+    "body-parser": "^1.19.0",
+    "cookie-session": "^1.3.3",
+    "express": "^4.17.1",
+    "global": "^4.4.0",
+    "mongoose": "^5.8.3",
+    "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
+    "react-flexbox-grid": "^2.1.2"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.2",
+    "nodemon": "^2.0.2"
+  }
+}
