@@ -164,6 +164,7 @@ class DataExtraction extends Component {
   handleCancel = () => this.setState({ previewVisible: false });
 
   handlePreview = async file => {
+    console.log(file);
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
     }
@@ -174,7 +175,9 @@ class DataExtraction extends Component {
     });
   };
 
-  handleChange = ({ fileList }) => this.setState({ fileList });
+  handleChange = info => {
+    //console.log(info);
+  };
 
   render() {
     const { previewVisible, previewImage, fileList } = this.state;
@@ -212,7 +215,7 @@ class DataExtraction extends Component {
             />
             <div className="clearfix mt-2">
               <Upload
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                action="http://localhost:5000/upload"
                 listType="picture-card"
                 fileList={fileList}
                 onPreview={this.handlePreview}

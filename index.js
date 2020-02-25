@@ -3,14 +3,30 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const keys = require("./config/keys");
 require("./models/User");
 require("./services/passport");
+const path = require("path");
 
 mongoose.Promise = global.Promise;
 mongoose.connect(keys.mongoURI);
 
 const app = express();
+
+const whitelist = ["http://localhost:3000", "http://example2.com"];
+const corsOptions = {
+  origin: function(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  }
+};
+
+// Then pass them to cors:
+app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 app.use(
@@ -19,11 +35,13 @@ app.use(
     keys: [keys.cookieKey]
   })
 );
+// app.use(express.static("public"));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 require("./routes/authRoutes")(app);
+require("./routes/uploadRoute")(app);
 
 if (process.env.NODE_ENV === "production") {
   // Express will serve up production assets
@@ -32,7 +50,7 @@ if (process.env.NODE_ENV === "production") {
 
   // Express will serve up the index.html file
   // if it doesn't recognize the route
-  const path = require("path");
+
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
