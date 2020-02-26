@@ -22,9 +22,6 @@ import {
 
 import { Upload, Icon, Modal } from "antd";
 
-import elogo from "../../assets/img/BrighticsAI.png";
-import eicons from "../../assets/img/svg/icon-e.svg";
-
 import "../../assets/css/tui-image-editor.css";
 import ImageEditor from "@toast-ui/react-image-editor";
 
@@ -121,53 +118,64 @@ const myTheme = {
 };
 
 class DataExtraction extends Component {
+  editorRef = React.createRef();
   state = {
     previewVisible: false,
-    previewImage: "",
+    previewImage: "../../assets/img/uploads/0001.jpg",
     fileList: [
       {
         uid: "-1",
         name: "image.png",
         status: "done",
-        url:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+        url: "../../assets/img/uploads/0001.jpg"
       },
       {
         uid: "-2",
         name: "image.png",
         status: "done",
-        url:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+        url: "../../assets/img/uploads/0002.jpg"
       },
       {
         uid: "-3",
         name: "image.png",
         status: "done",
-        url:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+        url: "../../assets/img/uploads/0004.jpg"
       },
       {
         uid: "-4",
         name: "image.png",
         status: "done",
-        url:
-          "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-      },
-      {
-        uid: "-5",
-        name: "image.png",
-        status: "error"
+        url: "../../assets/img/uploads/0005.jpg"
       }
     ]
+  };
+
+  imageEditorOptions = {
+    includeUI: {
+      loadImage: {
+        path: this.state.previewImage,
+        name: "sampleImage2"
+      },
+      uiSize: {
+        height: "530px"
+      },
+      theme: myTheme
+    }
+    //cssMaxWidth: 700,
+    //cssMaxHeight: 800
   };
 
   handleCancel = () => this.setState({ previewVisible: false });
 
   handlePreview = async file => {
-    console.log(file);
+    const editorInstance = this.editorRef.current.getInstance();
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
     }
+    editorInstance.loadImageFromURL(file.url || file.preview, "testImage");
+
+    console.log(file.url);
+    console.log(file.preview);
 
     this.setState({
       previewImage: file.url || file.preview,
@@ -175,8 +183,10 @@ class DataExtraction extends Component {
     });
   };
 
-  handleChange = info => {
-    //console.log(info);
+  handleChange = ({ fileList }) => this.setState({ fileList });
+
+  onChangeHandler = event => {
+    console.log(event.target.files[0]);
   };
 
   render() {
@@ -191,31 +201,11 @@ class DataExtraction extends Component {
       <div className="animated fadeIn">
         <Row>
           <Col xs="12" sm="12" lg="9" className="pr-2">
-            <ImageEditor
-              includeUI={{
-                loadImage: {
-                  path: elogo,
-                  name: "SampleImage"
-                },
-                uiSize: {
-                  height: "530px"
-                },
-                theme: myTheme,
-                //initMenu: "filter",
-
-                menuBarPosition: "bottom"
-              }}
-              cssMaxHeight={500}
-              cssMaxWidth={700}
-              selectionStyle={{
-                cornerSize: 20,
-                rotatingPointOffset: 70
-              }}
-              usageStatistics={false}
-            />
+            <ImageEditor ref={this.editorRef} {...this.imageEditorOptions} />
+            <input type="file" name="file" onChange={this.onChangeHandler} />
             <div className="clearfix mt-2">
               <Upload
-                action="http://localhost:5000/upload"
+                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                 listType="picture-card"
                 fileList={fileList}
                 onPreview={this.handlePreview}

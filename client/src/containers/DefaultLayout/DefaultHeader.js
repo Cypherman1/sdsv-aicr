@@ -17,7 +17,7 @@ import {
   AppSidebarToggler
 } from "@coreui/react";
 //import logo from "../../assets/img/brand/aicr.png";
-import logo from "../../assets/img/svg/icon-e.svg";
+import logo from "../../assets/img/brand/aicr.png";
 import sygnet from "../../assets/img/brand/brightics_logo.png";
 
 const propTypes = {
