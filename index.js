@@ -5,16 +5,19 @@ const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const keys = require("./config/keys");
+const dotenv = require("dotenv");
 require("./models/User");
 require("./services/passport");
 const path = require("path");
+
+dotenv.config();
 
 mongoose.Promise = global.Promise;
 mongoose.connect(keys.mongoURI);
 
 const app = express();
 
-const whitelist = ["http://localhost:3000", "http://example2.com"];
+//const whitelist = ["http://localhost:3000", "http://example2.com"];
 const corsOptions = {
   origin: "*",
   optionsSuccessStatus: 200
@@ -52,4 +55,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const PORT = process.env.PORT || 5000;
+
+console.log("listening on port" + PORT);
+
 app.listen(PORT);

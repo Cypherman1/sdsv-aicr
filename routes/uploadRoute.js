@@ -18,12 +18,11 @@ module.exports = app => {
 
   app.post("/upload", (req, res) => {
     upload(req, res, function(err) {
-      if (err instanceof multer.MulterError) {
-        return res.status(500).json(err);
-      } else if (err) {
-        return res.status(500).json(err);
+      if (err) {
+        console.log(err);
+      } else {
+        res.status(200).send(req.file);
       }
-      return res.status(200).send(req.file);
     });
   });
 };

@@ -21,6 +21,7 @@ import {
 } from "reactstrap";
 
 import { Upload, Icon, Modal } from "antd";
+import axios from "axios";
 
 import "../../assets/css/tui-image-editor.css";
 import ImageEditor from "@toast-ui/react-image-editor";
@@ -121,31 +122,31 @@ class DataExtraction extends Component {
   editorRef = React.createRef();
   state = {
     previewVisible: false,
-    previewImage: "../../assets/img/uploads/0001.jpg",
+    previewImage: "assets/img/uploads/0001.jpg",
     fileList: [
       {
         uid: "-1",
         name: "image.png",
         status: "done",
-        url: "../../assets/img/uploads/0001.jpg"
+        url: "assets/img/uploads/0001.jpg"
       },
       {
         uid: "-2",
         name: "image.png",
         status: "done",
-        url: "../../assets/img/uploads/0002.jpg"
+        url: "assets/img/uploads/0002.jpg"
       },
       {
         uid: "-3",
         name: "image.png",
         status: "done",
-        url: "../../assets/img/uploads/0004.jpg"
+        url: "assets/img/uploads/0004.jpg"
       },
       {
         uid: "-4",
         name: "image.png",
         status: "done",
-        url: "../../assets/img/uploads/0005.jpg"
+        url: "assets/img/uploads/0005.jpg"
       }
     ]
   };
@@ -183,7 +184,25 @@ class DataExtraction extends Component {
     });
   };
 
-  handleChange = ({ fileList }) => this.setState({ fileList });
+  handleChange = info => {
+    const formData = new FormData();
+    formData.append("myImage", info.file.originFileObj);
+    axios.post("http://localhost:5000/upload", formData, {}).then(res => {
+      this.setState({
+        fileList: [
+          ...this.state.fileList,
+          {
+            uid: "-4",
+            name: "image.png",
+            status: "done",
+            url: "assets/img/uploads/0006.jpg"
+          }
+        ]
+      });
+    });
+    console.log(info.file);
+    //this.setState(info.fileList);
+  };
 
   onChangeHandler = event => {
     console.log(event.target.files[0]);
