@@ -206,6 +206,9 @@ class DataExtraction extends Component {
     //});
     //this.setState(info.fileList);
   };
+  componentDidMount() {
+    this.props.listImg();
+  }
 
   render() {
     const { previewVisible, previewImage, fileList } = this.state;
@@ -226,7 +229,7 @@ class DataExtraction extends Component {
             <input type="file" name="file" onChange={this.onChangeHandler} />
             <div className="clearfix mt-2">
               <Upload
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                //action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                 listType="picture-card"
                 fileList={imgUpload.fileList}
                 onPreview={this.handlePreview}

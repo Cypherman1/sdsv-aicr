@@ -1,4 +1,4 @@
-import { IMG_UPLOAD } from "../actions/type";
+import { IMG_UPLOAD, LIST_IMG } from "../actions/type";
 
 const INITIAL_STATE = {
   fileList: []
@@ -6,6 +6,11 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case LIST_IMG:
+      return {
+        ...state,
+        fileList: action.payload
+      };
     case IMG_UPLOAD:
       return {
         ...state,

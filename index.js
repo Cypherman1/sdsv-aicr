@@ -7,13 +7,17 @@ const cors = require("cors");
 const keys = require("./config/keys");
 const dotenv = require("dotenv");
 require("./models/User");
+require("./models/UploadedImgs");
 require("./services/passport");
 const path = require("path");
 
 dotenv.config();
 
 mongoose.Promise = global.Promise;
-mongoose.connect(keys.mongoURI);
+mongoose.connect(keys.mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 const app = express();
 

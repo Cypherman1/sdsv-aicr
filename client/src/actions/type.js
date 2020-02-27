@@ -7,3 +7,4 @@ export const FETCH_USER = "fetch_user";
 //Images upload
 
 export const IMG_UPLOAD = "img_upload";
+export const LIST_IMG = "list_img";
