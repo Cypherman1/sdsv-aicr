@@ -22,7 +22,8 @@ import {
 
 import { Upload, Icon, Modal } from "antd";
 import axios from "axios";
-
+import { connect } from "react-redux";
+import * as actions from "../../actions";
 import "../../assets/css/tui-image-editor.css";
 import ImageEditor from "@toast-ui/react-image-editor";
 
@@ -187,29 +188,30 @@ class DataExtraction extends Component {
   handleChange = info => {
     const formData = new FormData();
     formData.append("myImage", info.file.originFileObj);
-    axios.post("http://localhost:5000/upload", formData, {}).then(res => {
-      this.setState({
-        fileList: [
-          ...this.state.fileList,
-          {
-            uid: "-4",
-            name: "image.png",
-            status: "done",
-            url: "assets/img/uploads/0006.jpg"
-          }
-        ]
-      });
-    });
-    console.log(info.file);
-    //this.setState(info.fileList);
-  };
+    this.props.uploadImg(formData);
+    // axios.post("http://localhost:5000/upload", formData, {}).then(res => {
+    //   this.setState({
+    //     fileList: [
+    //       ...this.state.fileList,
+    //       {
+    //         uid: "-5",
+    //         name: "image.png",
+    //         status: "done",
+    //         url: "assets/img/uploads/0006.jpg"
+    //       }
+    //     ]
+    //   });
 
-  onChangeHandler = event => {
-    console.log(event.target.files[0]);
+    //  console.log(res);
+    //});
+    //this.setState(info.fileList);
   };
 
   render() {
     const { previewVisible, previewImage, fileList } = this.state;
+    const { imgUpload, uploadImg } = this.props;
+    console.log(imgUpload.fileList);
+
     const uploadButton = (
       <div>
         <Icon type="plus" />
@@ -226,7 +228,7 @@ class DataExtraction extends Component {
               <Upload
                 action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                 listType="picture-card"
-                fileList={fileList}
+                fileList={imgUpload.fileList}
                 onPreview={this.handlePreview}
                 onChange={this.handleChange}
               >
@@ -252,4 +254,8 @@ class DataExtraction extends Component {
   }
 }
 
-export default DataExtraction;
+const mapStateToProps = ({ imgUpload }) => {
+  return { imgUpload };
+};
+
+export default connect(mapStateToProps, actions)(DataExtraction);
