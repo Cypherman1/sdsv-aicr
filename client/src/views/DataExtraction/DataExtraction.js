@@ -199,18 +199,32 @@ class DataExtraction extends Component {
       <div className="animated fadeIn">
         <Row>
           <Col xs="12" sm="12" lg="8" className="pr-2">
-            <ImageEditor ref={this.editorRef} {...this.imageEditorOptions} />
-            <div className="clearfix mt-2">
-              <Upload
-                //action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                listType="picture-card"
-                fileList={imgUpload.fileList}
-                onPreview={this.handlePreview}
-                onChange={this.handleChange}
-              >
-                {imgUpload.fileList.length >= 8 ? null : uploadButton}
-              </Upload>
-            </div>
+            <Card>
+              <CardHeader>
+                <strong> Scanned Doccument </strong>
+              </CardHeader>
+              <ImageEditor ref={this.editorRef} {...this.imageEditorOptions} />
+              <div className="clearfix mt-4 ml-3">
+                <Upload
+                  //action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  listType="picture-card"
+                  fileList={imgUpload.fileList}
+                  onPreview={this.handlePreview}
+                  onChange={this.handleChange}
+                >
+                  {imgUpload.fileList.length >= 8 ? null : uploadButton}
+                </Upload>
+              </div>
+              <CardFooter>
+                <Button
+                  type="submit"
+                  color="primary"
+                  className="mr-3 ml-3 float-right"
+                >
+                  Extract
+                </Button>
+              </CardFooter>
+            </Card>
           </Col>
           <Col xs="12" sm="12" lg="4" className="pl-2">
             <Card>
@@ -219,50 +233,54 @@ class DataExtraction extends Component {
               </CardHeader>
               <CardBody>
                 <FormGroup>
-                  <Label htmlFor="company">Company</Label>
-                  <Input
-                    type="text"
-                    id="company"
-                    placeholder="Enter your company name"
-                  />
+                  <Label htmlFor="company">Họ tên (Name)</Label>
+                  <Input type="text" id="company" placeholder="" />
+                </FormGroup>
+                <FormGroup row className="my-0">
+                  <Col xs="12" sm="5" lg="5">
+                    <FormGroup>
+                      <Label htmlFor="city">Ngày sinh (DoB)</Label>
+                      <Input type="text" id="city" placeholder="" />
+                    </FormGroup>
+                  </Col>
+                  <Col xs="12" sm="7" lg="7">
+                    <FormGroup>
+                      <Label htmlFor="postal-code">
+                        Quốc tịch (Nationality)
+                      </Label>
+                      <Input type="text" id="postal-code" placeholder="" />
+                    </FormGroup>
+                  </Col>
                 </FormGroup>
                 <FormGroup>
-                  <Label htmlFor="vat">VAT</Label>
-                  <Input type="text" id="vat" placeholder="DE1234567890" />
-                </FormGroup>
-                <FormGroup>
-                  <Label htmlFor="street">Street</Label>
+                  <Label htmlFor="home-no">Số nhà (Home No)</Label>
                   <Input
                     type="text"
-                    id="street"
+                    id="home-no"
                     placeholder="Enter street name"
                   />
                 </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="street">Đường (Street)</Label>
+                  <Input type="text" id="street" placeholder="" />
+                </FormGroup>
                 <FormGroup row className="my-0">
-                  <Col xs="8">
+                  <Col xs="12" sm="6" lg="6">
                     <FormGroup>
-                      <Label htmlFor="city">City</Label>
-                      <Input
-                        type="text"
-                        id="city"
-                        placeholder="Enter your city"
-                      />
+                      <Label htmlFor="city">Phường, xã (Ward)</Label>
+                      <Input type="text" id="city" placeholder="" />
                     </FormGroup>
                   </Col>
-                  <Col xs="4">
+                  <Col xs="12" sm="6" lg="6">
                     <FormGroup>
-                      <Label htmlFor="postal-code">Postal Code</Label>
-                      <Input
-                        type="text"
-                        id="postal-code"
-                        placeholder="Postal Code"
-                      />
+                      <Label htmlFor="postal-code">Tỉnh (District)</Label>
+                      <Input type="text" id="postal-code" placeholder="" />
                     </FormGroup>
                   </Col>
                 </FormGroup>
                 <FormGroup>
-                  <Label htmlFor="country">Country</Label>
-                  <Input type="text" id="country" placeholder="Country name" />
+                  <Label htmlFor="country">Thành phố (City)</Label>
+                  <Input type="text" id="country" placeholder="" />
                 </FormGroup>
               </CardBody>
               <CardFooter>
