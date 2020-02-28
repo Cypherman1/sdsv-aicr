@@ -1,27 +1,18 @@
-import React, { Component, lazy, Suspense } from "react";
+import React, { Component } from "react";
 import {
-  Badge,
   Button,
-  ButtonDropdown,
-  ButtonGroup,
-  ButtonToolbar,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
-  CardTitle,
   Col,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Progress,
   Row,
-  Table
+  FormGroup,
+  Label,
+  Input,
+  CardFooter
 } from "reactstrap";
 
-import { Upload, Icon, Modal } from "antd";
-import axios from "axios";
+import { Upload, Icon } from "antd";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 import "../../assets/css/tui-image-editor.css";
@@ -161,9 +152,10 @@ class DataExtraction extends Component {
       uiSize: {
         height: "530px"
       },
-      theme: myTheme
-    }
-    //cssMaxWidth: 700,
+      theme: myTheme,
+      menu: ["shape", "filter"]
+    },
+    cssMaxWidth: 500
     //cssMaxHeight: 800
   };
 
@@ -189,31 +181,13 @@ class DataExtraction extends Component {
     const formData = new FormData();
     formData.append("myImage", info.file.originFileObj);
     this.props.uploadImg(formData);
-    // axios.post("http://localhost:5000/upload", formData, {}).then(res => {
-    //   this.setState({
-    //     fileList: [
-    //       ...this.state.fileList,
-    //       {
-    //         uid: "-5",
-    //         name: "image.png",
-    //         status: "done",
-    //         url: "assets/img/uploads/0006.jpg"
-    //       }
-    //     ]
-    //   });
-
-    //  console.log(res);
-    //});
-    //this.setState(info.fileList);
   };
   componentDidMount() {
     this.props.listImg();
   }
 
   render() {
-    const { previewVisible, previewImage, fileList } = this.state;
-    const { imgUpload, uploadImg } = this.props;
-    console.log(imgUpload.fileList);
+    const { imgUpload } = this.props;
 
     const uploadButton = (
       <div>
@@ -224,9 +198,8 @@ class DataExtraction extends Component {
     return (
       <div className="animated fadeIn">
         <Row>
-          <Col xs="12" sm="12" lg="9" className="pr-2">
+          <Col xs="12" sm="12" lg="8" className="pr-2">
             <ImageEditor ref={this.editorRef} {...this.imageEditorOptions} />
-            <input type="file" name="file" onChange={this.onChangeHandler} />
             <div className="clearfix mt-2">
               <Upload
                 //action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -235,20 +208,74 @@ class DataExtraction extends Component {
                 onPreview={this.handlePreview}
                 onChange={this.handleChange}
               >
-                {fileList.length >= 8 ? null : uploadButton}
+                {imgUpload.fileList.length >= 8 ? null : uploadButton}
               </Upload>
             </div>
           </Col>
-          <Col xs="12" sm="12" lg="3" className="pl-2">
+          <Col xs="12" sm="12" lg="4" className="pl-2">
             <Card>
-              <CardHeader>Extracted Data</CardHeader>
+              <CardHeader>
+                <strong> Extracted Data </strong>
+              </CardHeader>
               <CardBody>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
-                diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-                aliquam erat volutpat. Ut wisi enim ad minim veniam, quis
-                nostrud exerci tation ullamcorper suscipit lobortis nisl ut
-                aliquip ex ea commodo consequat.
+                <FormGroup>
+                  <Label htmlFor="company">Company</Label>
+                  <Input
+                    type="text"
+                    id="company"
+                    placeholder="Enter your company name"
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="vat">VAT</Label>
+                  <Input type="text" id="vat" placeholder="DE1234567890" />
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="street">Street</Label>
+                  <Input
+                    type="text"
+                    id="street"
+                    placeholder="Enter street name"
+                  />
+                </FormGroup>
+                <FormGroup row className="my-0">
+                  <Col xs="8">
+                    <FormGroup>
+                      <Label htmlFor="city">City</Label>
+                      <Input
+                        type="text"
+                        id="city"
+                        placeholder="Enter your city"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col xs="4">
+                    <FormGroup>
+                      <Label htmlFor="postal-code">Postal Code</Label>
+                      <Input
+                        type="text"
+                        id="postal-code"
+                        placeholder="Postal Code"
+                      />
+                    </FormGroup>
+                  </Col>
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="country">Country</Label>
+                  <Input type="text" id="country" placeholder="Country name" />
+                </FormGroup>
               </CardBody>
+              <CardFooter>
+                <Row className="align-items-center">
+                  <Button type="submit" color="primary" className="mr-3 ml-3">
+                    Save change
+                  </Button>
+
+                  <Button type="submit" color="success">
+                    Export
+                  </Button>
+                </Row>
+              </CardFooter>
             </Card>
           </Col>
         </Row>

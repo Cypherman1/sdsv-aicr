@@ -24,10 +24,23 @@
 }
 
 .nav-link {
-  color: #ffffff !important;
+  font-weight: 500;
 }
 
-.nav-link:hover,
-.nav-link:focus {
-  color: #f86c6b !important;
+.nav-link i {
+  font-weight: 900;
+  font-size: 16px !important;
+}
+
+.tui-image-editor-container .tui-image-editor-controls {
+  background-color: #727274 !important;
+}
+
+.sidebar .nav-title {
+  height: 44px;
+}
+
+.dd-items .nav-link {
+  font-size: 12px;
+  padding-left: 30px;
 }

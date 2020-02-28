@@ -5,9 +5,7 @@ import {
   NavLink,
   Progress,
   TabContent,
-  TabPane,
-  ListGroup,
-  ListGroupItem
+  TabPane
 } from "reactstrap";
 import PropTypes from "prop-types";
 import classNames from "classnames";

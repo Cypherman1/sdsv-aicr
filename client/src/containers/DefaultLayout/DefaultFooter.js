@@ -15,10 +15,12 @@ class DefaultFooter extends Component {
     return (
       <React.Fragment>
         <span>
-          <a href="#">AICR</a> &copy; 2020 Samsung SDSRV
+          <a href="https://www.samsungsds.com/us/en/index.html">AICR</a> &copy;
+          2020 Samsung SDSRV
         </span>
         <span className="ml-auto">
-          Powered by <a href="#">Samsung SDS</a>
+          Powered by{" "}
+          <a href="https://www.samsungsds.com/us/en/index.html">Samsung SDSV</a>
         </span>
       </React.Fragment>
     );

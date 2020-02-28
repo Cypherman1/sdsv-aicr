@@ -13,22 +13,38 @@ export default {
     {
       name: "Credit Card",
       url: "/banking/creditcard",
-      icon: "icon-puzzle",
+      icon: "icon-credit-card",
       children: [
         {
           name: "Application Form",
           url: "/banking/creditcard/appform",
-          icon: "icon-puzzle"
+          icon: "icon-paper-plane",
+          class: "dd-items"
         },
         {
           name: "Identity Card",
-          url: "/base/cards",
-          icon: "icon-puzzle"
+          url: "/banking/cards/identity",
+          icon: "icon-user",
+          class: "dd-items"
         },
         {
           name: "Proof of Income",
-          url: "/base/cards",
-          icon: "icon-puzzle"
+          url: "/banking/cards/identity",
+          icon: "icon-tag",
+          class: "dd-items"
+        }
+      ]
+    },
+    {
+      name: "Home Loan",
+      url: "/banking/homeloan",
+      icon: "icon-home",
+      children: [
+        {
+          name: "Application Form",
+          url: "/banking/homeloan/appform",
+          icon: "icon-paper-plane",
+          class: "dd-items"
         }
       ]
     }
