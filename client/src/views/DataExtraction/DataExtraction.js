@@ -179,7 +179,7 @@ class DataExtraction extends Component {
 
   handleChange = info => {
     const formData = new FormData();
-    formData.append("myImage", info.file.originFileObj);
+    formData.append("file", info.file.originFileObj);
     this.props.uploadImg(formData);
   };
   componentDidMount() {

@@ -1,7 +1,9 @@
 const multer = require("multer");
 const mongoose = require("mongoose");
-
+const axios = require("axios");
+const FormData = require("form-data");
 const path = require("path");
+const fs = require("fs");
 
 const UploadedImgs = mongoose.model("uploadImgs");
 
@@ -17,9 +19,14 @@ module.exports = app => {
 
   const upload = multer({
     storage: storage
-  }).single("myImage");
+  }).single("file");
 
-  app.post("/upload", (req, res) => {
+  const upload1 = multer({
+    storage: multer.memoryStorage()
+  }).single("file");
+
+  app.post("/api/upload1", (req, res) => {
+    console.log(req);
     upload(req, res, function(err) {
       if (err) {
         console.log(err);
@@ -33,14 +40,6 @@ module.exports = app => {
         uploadImg
           .save()
           .then(result => {
-            // res.status(201).json({
-            //   message: "Image uploaded successfully!",
-            //   fileUploaded: {
-            //     _id: result._id,
-            //     path: result.path
-            //   }
-            // });
-            console.log(result);
             res.status(200).send(req.file);
           })
           .catch(err => {
@@ -54,9 +53,25 @@ module.exports = app => {
     });
   });
 
-  app.get("/imgslist", (req, res) => {
+  app.get("/api/imgslist", (req, res) => {
     UploadedImgs.find({}, (err, imgs) => {
       res.send(imgs);
+    });
+  });
+
+  app.post("/api/upload", (req, res) => {
+    upload1(req, res, function(err) {
+      if (err) {
+        console.log(err);
+      } else {
+        const formData = new FormData();
+        formData.append("file", req.file.buffer);
+
+        axios
+          .post("http://192.168.0.61:3000/api/images", formData, {})
+          .then(res => console.log(res.data))
+          .catch(err => console.log(err));
+      }
     });
   });
 };

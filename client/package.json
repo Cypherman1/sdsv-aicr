@@ -1,16 +1,12 @@
 {
-  "name": "@coreui/coreui-free-react-admin-template",
-  "version": "2.6.0",
-  "description": "CoreUI React Open Source Bootstrap 4 Admin Template",
-  "author": "Łukasz Holeczek",
-  "homepage": "https://coreui.io",
-  "copyright": "Copyright 2017-2019 creativeLabs Łukasz Holeczek",
-  "license": "MIT",
+  "name": "AICR",
+  "version": "1.0.0",
+  "description": "SDSV AICR",
+  "author": "SDSRV",
+  "homepage": "",
+  "copyright": "",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:coreui/coreui-free-react-admin-template.git"
-  },
+  "proxy": "http://localhost:5000/",
   "dependencies": {
     "@coreui/coreui": "^2.1.12",
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.3.1",
