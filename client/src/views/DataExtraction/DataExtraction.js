@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Button,
   Card,
   CardBody,
   CardHeader,
@@ -12,7 +11,7 @@ import {
   CardFooter
 } from "reactstrap";
 
-import { Upload, Icon } from "antd";
+import { Upload, Icon, message, Button } from "antd";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 import "../../assets/css/tui-image-editor.css";
@@ -26,6 +25,13 @@ function getBase64(file) {
     reader.onerror = error => reject(error);
   });
 }
+
+message.config({
+  top: 70,
+  duration: 2,
+  maxCount: 3
+});
+
 const myTheme = {
   "common.bi.image":
     "https://uicdn.toast.com/toastui/img/tui-image-editor-bi.png",
@@ -150,7 +156,7 @@ class DataExtraction extends Component {
         name: "sampleImage2"
       },
       uiSize: {
-        height: "530px"
+        height: "345px"
       },
       theme: myTheme,
       menu: ["shape", "filter"],
@@ -162,9 +168,7 @@ class DataExtraction extends Component {
 
   handlePreview = async file => {
     const editorInstance = this.editorRef.current.getInstance();
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
-    }
+    this.props.resetForm();
     editorInstance.loadImageFromURL(file.url || file.preview, "testImage");
     this.props.setCurrentImg(file.url || file.preview);
   };
@@ -189,13 +193,27 @@ class DataExtraction extends Component {
     );
     await this.props.setCurrentImg(this.props.imgUpload.fileList[0].url);
   };
+
+  success = () => {
+    message.success("Data extracted!");
+  };
+
+  error = () => {
+    message.error("Oops, something go wrong!");
+  };
+
   handleClick = async () => {
-    const cuid = this.props.dataExtract.currentImg.substring(
-      this.props.dataExtract.currentImg.lastIndexOf("/") + 1
-    );
-    //console.log(this.props);
-    await this.props.extractData(cuid);
-    console.log(this.props.dataExtract);
+    try {
+      const cuid = this.props.dataExtract.currentImg.substring(
+        this.props.dataExtract.currentImg.lastIndexOf("/") + 1
+      );
+      this.props.setLoading(true);
+      //console.log(this.props);
+      await this.props.extractData(cuid);
+      this.success();
+    } catch (ex) {
+      this.error();
+    }
   };
   handleChangeName = e => {
     this.props.setName(e.target.value);
@@ -258,8 +276,9 @@ class DataExtraction extends Component {
               <CardFooter>
                 <Button
                   type="submit"
-                  color="primary"
+                  type="primary"
                   className="mr-3 ml-3 float-right"
+                  loading={dataExtract.loading}
                   onClick={this.handleClick}
                 >
                   Extract
@@ -268,7 +287,7 @@ class DataExtraction extends Component {
             </Card>
           </Col>
           <Col xs="12" sm="12" lg="4" className="pl-2">
-            <Card>
+            <Card className="extract-data">
               <CardHeader>
                 <strong> Extracted Data </strong>
               </CardHeader>
@@ -309,25 +328,31 @@ class DataExtraction extends Component {
                     </FormGroup>
                   </Col>
                 </FormGroup>
-                <FormGroup>
-                  <Label htmlFor="nohome1">Số nhà (Home No)</Label>
-                  <Input
-                    type="text"
-                    id="nohome1"
-                    placeholder=""
-                    value={dataExtract.nohome1}
-                    onChange={e => this.handleChangeNohome1}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label htmlFor="streethome1">Đường (Street)</Label>
-                  <Input
-                    type="text"
-                    id="streethome1"
-                    placeholder=""
-                    value={dataExtract.streethome1}
-                    onChange={e => this.handleChangeStreethome1}
-                  />
+                <FormGroup row className="my-0">
+                  <Col xs="12" sm="6" lg="6">
+                    <FormGroup>
+                      <Label htmlFor="nohome1">Số nhà (Home No)</Label>
+                      <Input
+                        type="text"
+                        id="nohome1"
+                        placeholder=""
+                        value={dataExtract.nohome1}
+                        onChange={e => this.handleChangeNohome1}
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col xs="12" sm="6" lg="6">
+                    <FormGroup>
+                      <Label htmlFor="streethome1">Đường (Street)</Label>
+                      <Input
+                        type="text"
+                        id="streethome1"
+                        placeholder=""
+                        value={dataExtract.streethome1}
+                        onChange={e => this.handleChangeStreethome1}
+                      />
+                    </FormGroup>
+                  </Col>
                 </FormGroup>
                 <FormGroup row className="my-0">
                   <Col xs="12" sm="6" lg="6">
@@ -366,7 +391,7 @@ class DataExtraction extends Component {
                   />
                 </FormGroup>
                 <FormGroup>
-                  <Label htmlFor="phonenumber">Điện thoại (Phone)</Label>
+                  <Label htmlFor="phonenumber">Di động (Phone)</Label>
                   <Input
                     type="text"
                     id="phonenumber"
@@ -377,15 +402,12 @@ class DataExtraction extends Component {
                 </FormGroup>
               </CardBody>
               <CardFooter>
-                <Row className="align-items-center">
-                  <Button type="submit" color="primary" className="mr-3 ml-3">
-                    Save change
-                  </Button>
-
-                  <Button type="submit" color="success">
-                    Export
-                  </Button>
-                </Row>
+                <Button type="success" className="ml-3 float-right">
+                  Export
+                </Button>
+                <Button type="primary" className=" float-right">
+                  Save change
+                </Button>
               </CardFooter>
             </Card>
           </Col>
