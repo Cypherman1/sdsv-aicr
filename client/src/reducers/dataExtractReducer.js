@@ -9,7 +9,9 @@ import {
   SET_WARDHOME1,
   SET_DISTRICTHOME1,
   SET_CITYHOME1,
-  SET_PHONENUMBER
+  SET_PHONENUMBER,
+  SET_LOADING,
+  RESET_FORM
 } from "../actions/type";
 
 const INITIAL_STATE = {
@@ -24,15 +26,35 @@ const INITIAL_STATE = {
   districthome1: "",
   cityhome1: "",
   phonenumber: "",
-  status: "loading"
+  loading: false
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: action.payload
+      };
     case SET_CURRENT_IMG:
       return {
         ...state,
         currentImg: action.payload
+      };
+    case RESET_FORM:
+      return {
+        ...state,
+        exData: {},
+        name: "",
+        birthday: "",
+        nation: "",
+        nohome1: "",
+        streethome1: "",
+        wardhome1: "",
+        districthome1: "",
+        cityhome1: "",
+        phonenumber: "",
+        loading: false
       };
     case EXTRACT_DATA:
       return {
@@ -47,7 +69,7 @@ export default (state = INITIAL_STATE, action) => {
         districthome1: action.payload.DISTRICTHOME1,
         cityhome1: action.payload.CITYHOME1,
         phonenumber: action.payload.PHONENUMBER,
-        status: "done"
+        loading: false
       };
     case SET_NAME:
       return {

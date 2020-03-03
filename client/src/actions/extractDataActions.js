@@ -9,10 +9,21 @@ import {
   SET_WARDHOME1,
   SET_DISTRICTHOME1,
   SET_CITYHOME1,
-  SET_PHONENUMBER
+  SET_PHONENUMBER,
+  SET_LOADING,
+  RESET_FORM
 } from "./type";
 
 import axios from "axios";
+
+export const setLoading = loading => ({
+  type: SET_LOADING,
+  payload: loading
+});
+
+export const resetForm = () => ({
+  type: RESET_FORM
+});
 
 export const setCurrentImg = current_img => ({
   type: SET_CURRENT_IMG,
@@ -22,6 +33,7 @@ export const setCurrentImg = current_img => ({
 export const extractData = uid => async dispatch => {
   try {
     const res = await axios.post(`http://192.168.0.61:3000/api/hw/${uid}`);
+    console.log(res.data);
     dispatch({ type: EXTRACT_DATA, payload: res.data });
   } catch (err) {}
 };
