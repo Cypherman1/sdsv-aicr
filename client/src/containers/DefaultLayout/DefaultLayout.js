@@ -43,7 +43,12 @@ class DefaultLayout extends Component {
           </Suspense>
         </AppHeader>
         <div className="app-body">
-          <AppSidebar fixed display="lg" className="text-primary">
+          <AppSidebar
+            fixed
+            display="lg"
+            className="text-primary"
+            minimized="true"
+          >
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
