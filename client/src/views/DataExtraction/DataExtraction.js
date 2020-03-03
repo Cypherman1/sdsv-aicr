@@ -7,29 +7,19 @@ import {
   Row,
   FormGroup,
   Label,
-  Input,
-  CardFooter
+  Input
 } from "reactstrap";
 
-import { Upload, Icon, message, Button } from "antd";
+import { Upload, Icon, notification, Button } from "antd";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 import "../../assets/css/tui-image-editor.css";
 import ImageEditor from "@toast-ui/react-image-editor";
 
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
-}
-
-message.config({
-  top: 70,
-  duration: 2,
-  maxCount: 3
+notification.config({
+  placement: "bottomRight",
+  bottom: 0,
+  duration: 2
 });
 
 const myTheme = {
@@ -118,36 +108,6 @@ const myTheme = {
 
 class DataExtraction extends Component {
   editorRef = React.createRef();
-  state = {
-    previewVisible: false,
-    previewImage: "assets/img/uploads/0001.jpg",
-    fileList: [
-      {
-        uid: "-1",
-        name: "image.png",
-        status: "done",
-        url: "assets/img/uploads/0001.jpg"
-      },
-      {
-        uid: "-2",
-        name: "image.png",
-        status: "done",
-        url: "assets/img/uploads/0002.jpg"
-      },
-      {
-        uid: "-3",
-        name: "image.png",
-        status: "done",
-        url: "assets/img/uploads/0004.jpg"
-      },
-      {
-        uid: "-4",
-        name: "image.png",
-        status: "done",
-        url: "assets/img/uploads/0005.jpg"
-      }
-    ]
-  };
 
   imageEditorOptions = {
     includeUI: {
@@ -164,6 +124,12 @@ class DataExtraction extends Component {
     },
     //cssMaxWidth: 200
     cssMaxHeight: 1000
+  };
+  openNotificationWithIcon = (type, title, description) => {
+    notification[type]({
+      message: title,
+      description: description
+    });
   };
 
   handlePreview = async file => {
@@ -185,21 +151,20 @@ class DataExtraction extends Component {
     }
   };
   componentDidMount = async () => {
-    await this.props.listImg();
-    const editorInstance = this.editorRef.current.getInstance();
-    await editorInstance.loadImageFromURL(
-      this.props.imgUpload.fileList[0].url,
-      "testImage"
-    );
-    await this.props.setCurrentImg(this.props.imgUpload.fileList[0].url);
-  };
+    try {
+      await this.props.listImg();
+      //const editorInstance = this.editorRef.current.getInstance();
 
-  success = () => {
-    message.success("Data extracted!");
-  };
+      // await this.props.setCurrentImg(this.props.imgUpload.fileList[0].url);
+      // console.log(this.props.imgUpload.fileList[0].url);
 
-  error = () => {
-    message.error("Oops, something go wrong!");
+      // await editorInstance.loadImageFromURL(
+      //   this.props.imgUpload.fileList[0].url,
+      //   "testImage"
+      // );
+    } catch (ex) {
+      console.log(ex);
+    }
   };
 
   handleClick = async () => {
@@ -209,10 +174,18 @@ class DataExtraction extends Component {
       );
       this.props.setLoading(true);
       //console.log(this.props);
-      await this.props.extractData(cuid);
-      this.success();
+      const res = await this.props.extractData(cuid).catch(e => this.error());
+      if (res.status) {
+        this.openNotificationWithIcon(
+          "error",
+          "Failed",
+          "Oops, Something go wrong!"
+        );
+      } else {
+        this.openNotificationWithIcon("success", "Done", "Data extracted!");
+      }
     } catch (ex) {
-      this.error();
+      console.log(ex);
     }
   };
   handleChangeName = e => {
@@ -265,12 +238,13 @@ class DataExtraction extends Component {
                   loading={dataExtract.loading}
                   onClick={this.handleClick}
                 >
-                  Extract
+                  Extract data
                 </Button>
               </CardHeader>
-              <ImageEditor ref={this.editorRef} {...this.imageEditorOptions} >
-
-              </ImageEditor>
+              <ImageEditor
+                ref={this.editorRef}
+                {...this.imageEditorOptions}
+              ></ImageEditor>
               <div className="clearfix mt-4 ml-3">
                 <Upload
                   action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -289,14 +263,16 @@ class DataExtraction extends Component {
             <Card className="extract-form">
               <CardHeader>
                 <strong> Extracted Data </strong>
+                <Button
+                  type="primary"
+                  style={{ backgroundColor: "green", borderColor: "green" }}
+                  className="float-right"
+                >
+                  Export
+                </Button>
                 <Button type="primary" className="mr-3 ml-3 float-right">
                   Save change
                 </Button>
-
-                <Button type="success" className= "float-right">
-                  Export
-                </Button>
-
               </CardHeader>
               <CardBody>
                 <form className="form-horizontal">
@@ -386,7 +362,9 @@ class DataExtraction extends Component {
                   </FormGroup>
                   <FormGroup row>
                     <Col md="5">
-                      <Label htmlFor="districthome1">Quận/Huyện (District)</Label>
+                      <Label htmlFor="districthome1">
+                        Quận/Huyện (District)
+                      </Label>
                     </Col>
                     <Col xs="12" md="7">
                       <Input

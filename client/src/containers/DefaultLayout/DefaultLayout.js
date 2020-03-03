@@ -12,7 +12,6 @@ import {
   AppSidebarForm,
   AppSidebarHeader,
   AppSidebarMinimizer,
-  AppBreadcrumb2 as AppBreadcrumb,
   AppSidebarNav2 as AppSidebarNav
 } from "@coreui/react";
 // sidebar nav config
@@ -43,7 +42,12 @@ class DefaultLayout extends Component {
           </Suspense>
         </AppHeader>
         <div className="app-body">
-          <AppSidebar fixed display="lg" minimized={true} className="text-primary">
+          <AppSidebar
+            fixed
+            display="lg"
+            minimized={true}
+            className="text-primary"
+          >
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>

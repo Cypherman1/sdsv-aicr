@@ -33,9 +33,12 @@ export const setCurrentImg = current_img => ({
 export const extractData = uid => async dispatch => {
   try {
     const res = await axios.post(`http://192.168.0.61:3000/api/hw/${uid}`);
-    console.log(res.data);
+
     dispatch({ type: EXTRACT_DATA, payload: res.data });
-  } catch (err) {}
+    return res.data;
+  } catch (err) {
+    return { status: "fail" };
+  }
 };
 
 export const setName = name => ({

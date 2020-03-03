@@ -15,7 +15,7 @@ import {
 } from "../actions/type";
 
 const INITIAL_STATE = {
-  currentImg: "assets/img/uploads/0001.jpg",
+  currentImg: "http://192.168.0.61:3000/api/images/50",
   exData: {},
   name: "",
   birthday: "",

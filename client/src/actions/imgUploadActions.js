@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IMG_UPLOAD, LIST_IMG, DEL_IMG } from "./type";
+import { IMG_UPLOAD, LIST_IMG } from "./type";
 
 export const uploadImg = formData => async dispatch => {
   try {
@@ -29,7 +29,8 @@ export const listImg = () => async dispatch => {
 export const delImg = uid => async dispatch => {
   try {
     var res = await axios.delete(`http://192.168.0.61:3000/api/images/${uid}`);
+    return res;
   } catch (err) {
-    console.log(err);
+    return { status: false };
   }
 };

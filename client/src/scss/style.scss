@@ -50,10 +50,11 @@ main.main {
   .card-header {
     padding: 0.5rem 1rem;
   }
-
 }
 
-.ant-upload-list-item, .ant-upload-list-picture-card-container, .ant-upload {
+.ant-upload-list-item,
+.ant-upload-list-picture-card-container,
+.ant-upload {
   width: 64px !important;
   height: 64px !important;
   margin: 0 5px;
@@ -76,13 +77,16 @@ main.main {
     flex: none;
     label {
       text-align: left;
-    //  &:after {
-    //    content: ":"
-    //  }
+      //  &:after {
+      //    content: ":"
+      //  }
     }
 
     .form-group {
       margin-bottom: 0.5rem;
+    }
+    input {
+      font-weight: bold;
     }
   }
 
@@ -103,4 +107,3 @@ main.main {
     }
   }
 }
-
