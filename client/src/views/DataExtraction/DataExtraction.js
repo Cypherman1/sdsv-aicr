@@ -146,20 +146,19 @@ class DataExtraction extends Component {
   imageEditorOptions = {
     includeUI: {
       loadImage: {
-        path: this.state.previewImage,
+        path: this.props.dataExtract.currentImg,
         name: "sampleImage2"
       },
       uiSize: {
         height: "530px"
       },
       theme: myTheme,
-      menu: ["shape", "filter"]
+      menu: ["shape", "filter"],
+      menuBarPosition: "left"
     },
-    cssMaxWidth: 500
-    //cssMaxHeight: 800
+    //cssMaxWidth: 200
+    cssMaxHeight: 1000
   };
-
-  handleCancel = () => this.setState({ previewVisible: false });
 
   handlePreview = async file => {
     const editorInstance = this.editorRef.current.getInstance();
@@ -167,27 +166,67 @@ class DataExtraction extends Component {
       file.preview = await getBase64(file.originFileObj);
     }
     editorInstance.loadImageFromURL(file.url || file.preview, "testImage");
-
-    console.log(file.url);
-    console.log(file.preview);
-
-    this.setState({
-      previewImage: file.url || file.preview,
-      previewVisible: true
-    });
+    this.props.setCurrentImg(file.url || file.preview);
   };
 
+  handleRemove = async info => {
+    await this.props.delImg(info.uid);
+    await this.props.listImg();
+  };
   handleChange = info => {
-    const formData = new FormData();
-    formData.append("file", info.file.originFileObj);
-    this.props.uploadImg(formData);
+    if (info.file.originFileObj) {
+      const formData = new FormData();
+      formData.append("file", info.file.originFileObj);
+      this.props.uploadImg(formData);
+    }
   };
-  componentDidMount() {
-    this.props.listImg();
-  }
+  componentDidMount = async () => {
+    await this.props.listImg();
+    const editorInstance = this.editorRef.current.getInstance();
+    await editorInstance.loadImageFromURL(
+      this.props.imgUpload.fileList[0].url,
+      "testImage"
+    );
+    await this.props.setCurrentImg(this.props.imgUpload.fileList[0].url);
+  };
+  handleClick = async () => {
+    const cuid = this.props.dataExtract.currentImg.substring(
+      this.props.dataExtract.currentImg.lastIndexOf("/") + 1
+    );
+    //console.log(this.props);
+    await this.props.extractData(cuid);
+    console.log(this.props.dataExtract);
+  };
+  handleChangeName = e => {
+    this.props.setName(e.target.value);
+  };
+  handleChangeBirthday = e => {
+    this.props.setName(e.target.birthday);
+  };
+  handleChangeNation = e => {
+    this.props.setName(e.target.nation);
+  };
+  handleChangeNohome1 = e => {
+    this.props.setName(e.target.nohome1);
+  };
+  handleChangeStreethome1 = e => {
+    this.props.setName(e.target.streethome1);
+  };
+  handleChangeWardhome1 = e => {
+    this.props.setName(e.target.wardhome1);
+  };
+  handleChangeDistricthome1 = e => {
+    this.props.setName(e.target.districthome1);
+  };
+  handleChangeCityhome1 = e => {
+    this.props.setName(e.target.cityhome1);
+  };
+  handleChangePhonenumber = e => {
+    this.props.setName(e.target.phonenumber);
+  };
 
   render() {
-    const { imgUpload } = this.props;
+    const { imgUpload, dataExtract } = this.props;
 
     const uploadButton = (
       <div>
@@ -206,11 +245,12 @@ class DataExtraction extends Component {
               <ImageEditor ref={this.editorRef} {...this.imageEditorOptions} />
               <div className="clearfix mt-4 ml-3">
                 <Upload
-                  //action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                   listType="picture-card"
                   fileList={imgUpload.fileList}
                   onPreview={this.handlePreview}
                   onChange={this.handleChange}
+                  onRemove={this.handleRemove}
                 >
                   {imgUpload.fileList.length >= 8 ? null : uploadButton}
                 </Upload>
@@ -220,6 +260,7 @@ class DataExtraction extends Component {
                   type="submit"
                   color="primary"
                   className="mr-3 ml-3 float-right"
+                  onClick={this.handleClick}
                 >
                   Extract
                 </Button>
@@ -233,54 +274,106 @@ class DataExtraction extends Component {
               </CardHeader>
               <CardBody>
                 <FormGroup>
-                  <Label htmlFor="company">Họ tên (Name)</Label>
-                  <Input type="text" id="company" placeholder="" />
+                  <Label htmlFor="name">Họ tên (Name)</Label>
+                  <Input
+                    type="text"
+                    id="name"
+                    placeholder=""
+                    value={dataExtract.name}
+                    onChange={e => this.handleChangeName}
+                  />
                 </FormGroup>
                 <FormGroup row className="my-0">
                   <Col xs="12" sm="5" lg="5">
                     <FormGroup>
-                      <Label htmlFor="city">Ngày sinh (DoB)</Label>
-                      <Input type="text" id="city" placeholder="" />
+                      <Label htmlFor="birthday">Ngày sinh (DoB)</Label>
+                      <Input
+                        type="text"
+                        id="birthday"
+                        placeholder=""
+                        value={dataExtract.birthday}
+                        onChange={e => this.handleChangeBirthday}
+                      />
                     </FormGroup>
                   </Col>
                   <Col xs="12" sm="7" lg="7">
                     <FormGroup>
-                      <Label htmlFor="postal-code">
-                        Quốc tịch (Nationality)
-                      </Label>
-                      <Input type="text" id="postal-code" placeholder="" />
+                      <Label htmlFor="nation">Quốc tịch (Nationality)</Label>
+                      <Input
+                        type="text"
+                        id="nation"
+                        placeholder=""
+                        value={dataExtract.nation}
+                        onChange={e => this.handleChangeNation}
+                      />
                     </FormGroup>
                   </Col>
                 </FormGroup>
                 <FormGroup>
-                  <Label htmlFor="home-no">Số nhà (Home No)</Label>
+                  <Label htmlFor="nohome1">Số nhà (Home No)</Label>
                   <Input
                     type="text"
-                    id="home-no"
-                    placeholder="Enter street name"
+                    id="nohome1"
+                    placeholder=""
+                    value={dataExtract.nohome1}
+                    onChange={e => this.handleChangeNohome1}
                   />
                 </FormGroup>
                 <FormGroup>
-                  <Label htmlFor="street">Đường (Street)</Label>
-                  <Input type="text" id="street" placeholder="" />
+                  <Label htmlFor="streethome1">Đường (Street)</Label>
+                  <Input
+                    type="text"
+                    id="streethome1"
+                    placeholder=""
+                    value={dataExtract.streethome1}
+                    onChange={e => this.handleChangeStreethome1}
+                  />
                 </FormGroup>
                 <FormGroup row className="my-0">
                   <Col xs="12" sm="6" lg="6">
                     <FormGroup>
-                      <Label htmlFor="city">Phường, xã (Ward)</Label>
-                      <Input type="text" id="city" placeholder="" />
+                      <Label htmlFor="wardhome1">Phường, xã (Ward)</Label>
+                      <Input
+                        type="text"
+                        id="wardhome1"
+                        placeholder=""
+                        value={dataExtract.wardhome1}
+                        onChange={e => this.handleChangeWardhome1}
+                      />
                     </FormGroup>
                   </Col>
                   <Col xs="12" sm="6" lg="6">
                     <FormGroup>
-                      <Label htmlFor="postal-code">Tỉnh (District)</Label>
-                      <Input type="text" id="postal-code" placeholder="" />
+                      <Label htmlFor="districthome1">Tỉnh (District)</Label>
+                      <Input
+                        type="text"
+                        id="districthome1"
+                        placeholder=""
+                        value={dataExtract.districthome1}
+                        onChange={e => this.handleChangeDistricthome1}
+                      />
                     </FormGroup>
                   </Col>
                 </FormGroup>
                 <FormGroup>
-                  <Label htmlFor="country">Thành phố (City)</Label>
-                  <Input type="text" id="country" placeholder="" />
+                  <Label htmlFor="cityhome1">Thành phố (City)</Label>
+                  <Input
+                    type="text"
+                    id="cityhome1"
+                    placeholder=""
+                    value={dataExtract.cityhome1}
+                    onChange={e => this.handleChangeCityhome1}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="phonenumber">Điện thoại (Phone)</Label>
+                  <Input
+                    type="text"
+                    id="phonenumber"
+                    placeholder=""
+                    value={dataExtract.phonenumber}
+                    onChange={e => this.handleChangePhonenumber}
+                  />
                 </FormGroup>
               </CardBody>
               <CardFooter>
@@ -302,8 +395,8 @@ class DataExtraction extends Component {
   }
 }
 
-const mapStateToProps = ({ imgUpload }) => {
-  return { imgUpload };
+const mapStateToProps = ({ imgUpload, dataExtract }) => {
+  return { imgUpload, dataExtract };
 };
 
 export default connect(mapStateToProps, actions)(DataExtraction);
