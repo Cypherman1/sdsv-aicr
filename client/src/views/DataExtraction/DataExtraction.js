@@ -428,17 +428,6 @@ class DataExtraction extends Component {
                   </FormGroup>
                 </form>
               </CardBody>
-              <CardFooter>
-                <Row className="align-items-center">
-                  <Button type="submit" color="primary" className="mr-3 ml-3">
-                    Save change
-                  </Button>
-
-                  <Button type="submit" color="success">
-                    Export
-                  </Button>
-                </Row>
-              </CardFooter>
             </Card>
           </Col>
         </Row>
