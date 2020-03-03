@@ -150,7 +150,7 @@ class DataExtraction extends Component {
         name: "sampleImage2"
       },
       uiSize: {
-        height: "530px"
+        // height: "530px"
       },
       theme: myTheme,
       menu: ["shape", "filter"],
@@ -235,14 +235,24 @@ class DataExtraction extends Component {
       </div>
     );
     return (
-      <div className="animated fadeIn">
+      <div className="data-extraction animated fadeIn">
         <Row>
           <Col xs="12" sm="12" lg="8" className="pr-2">
             <Card>
               <CardHeader>
                 <strong> Scanned Doccument </strong>
+                <Button
+                  type="submit"
+                  color="primary"
+                  className="mr-3 ml-3 float-right"
+                  onClick={this.handleClick}
+                >
+                  Extract
+                </Button>
               </CardHeader>
-              <ImageEditor ref={this.editorRef} {...this.imageEditorOptions} />
+              <ImageEditor ref={this.editorRef} {...this.imageEditorOptions} >
+
+              </ImageEditor>
               <div className="clearfix mt-4 ml-3">
                 <Upload
                   action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -255,38 +265,42 @@ class DataExtraction extends Component {
                   {imgUpload.fileList.length >= 8 ? null : uploadButton}
                 </Upload>
               </div>
-              <CardFooter>
-                <Button
-                  type="submit"
-                  color="primary"
-                  className="mr-3 ml-3 float-right"
-                  onClick={this.handleClick}
-                >
-                  Extract
-                </Button>
-              </CardFooter>
             </Card>
           </Col>
           <Col xs="12" sm="12" lg="4" className="pl-2">
-            <Card>
+            <Card className="extract-form">
               <CardHeader>
                 <strong> Extracted Data </strong>
+                <Button type="submit" color="primary" className="mr-3 ml-3 float-right">
+                  Save change
+                </Button>
+
+                <Button type="submit" color="success float-right">
+                  Export
+                </Button>
+
               </CardHeader>
               <CardBody>
-                <FormGroup>
-                  <Label htmlFor="name">Họ tên (Name)</Label>
-                  <Input
-                    type="text"
-                    id="name"
-                    placeholder=""
-                    value={dataExtract.name}
-                    onChange={e => this.handleChangeName}
-                  />
-                </FormGroup>
-                <FormGroup row className="my-0">
-                  <Col xs="12" sm="5" lg="5">
-                    <FormGroup>
+                <form className="form-horizontal">
+                  <FormGroup row>
+                    <Col md="5">
+                      <Label htmlFor="name">Họ tên (Name)</Label>
+                    </Col>
+                    <Col xs="12" md="7">
+                      <Input
+                        type="text"
+                        id="name"
+                        placeholder=""
+                        value={dataExtract.name}
+                        onChange={e => this.handleChangeName}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="5">
                       <Label htmlFor="birthday">Ngày sinh (DoB)</Label>
+                    </Col>
+                    <Col xs="12" md="7">
                       <Input
                         type="text"
                         id="birthday"
@@ -294,11 +308,13 @@ class DataExtraction extends Component {
                         value={dataExtract.birthday}
                         onChange={e => this.handleChangeBirthday}
                       />
-                    </FormGroup>
-                  </Col>
-                  <Col xs="12" sm="7" lg="7">
-                    <FormGroup>
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="5">
                       <Label htmlFor="nation">Quốc tịch (Nationality)</Label>
+                    </Col>
+                    <Col xs="12" md="7">
                       <Input
                         type="text"
                         id="nation"
@@ -306,33 +322,41 @@ class DataExtraction extends Component {
                         value={dataExtract.nation}
                         onChange={e => this.handleChangeNation}
                       />
-                    </FormGroup>
-                  </Col>
-                </FormGroup>
-                <FormGroup>
-                  <Label htmlFor="nohome1">Số nhà (Home No)</Label>
-                  <Input
-                    type="text"
-                    id="nohome1"
-                    placeholder=""
-                    value={dataExtract.nohome1}
-                    onChange={e => this.handleChangeNohome1}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label htmlFor="streethome1">Đường (Street)</Label>
-                  <Input
-                    type="text"
-                    id="streethome1"
-                    placeholder=""
-                    value={dataExtract.streethome1}
-                    onChange={e => this.handleChangeStreethome1}
-                  />
-                </FormGroup>
-                <FormGroup row className="my-0">
-                  <Col xs="12" sm="6" lg="6">
-                    <FormGroup>
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="5">
+                      <Label htmlFor="nohome1">Số nhà (Home No)</Label>
+                    </Col>
+                    <Col xs="12" md="7">
+                      <Input
+                        type="text"
+                        id="nohome1"
+                        placeholder=""
+                        value={dataExtract.nohome1}
+                        onChange={e => this.handleChangeNohome1}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="5">
+                      <Label htmlFor="streethome1">Đường (Street)</Label>
+                    </Col>
+                    <Col xs="12" md="7">
+                      <Input
+                        type="text"
+                        id="streethome1"
+                        placeholder=""
+                        value={dataExtract.streethome1}
+                        onChange={e => this.handleChangeStreethome1}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="5">
                       <Label htmlFor="wardhome1">Phường, xã (Ward)</Label>
+                    </Col>
+                    <Col xs="12" md="7">
                       <Input
                         type="text"
                         id="wardhome1"
@@ -340,11 +364,13 @@ class DataExtraction extends Component {
                         value={dataExtract.wardhome1}
                         onChange={e => this.handleChangeWardhome1}
                       />
-                    </FormGroup>
-                  </Col>
-                  <Col xs="12" sm="6" lg="6">
-                    <FormGroup>
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="5">
                       <Label htmlFor="districthome1">Tỉnh (District)</Label>
+                    </Col>
+                    <Col xs="12" md="7">
                       <Input
                         type="text"
                         id="districthome1"
@@ -352,41 +378,38 @@ class DataExtraction extends Component {
                         value={dataExtract.districthome1}
                         onChange={e => this.handleChangeDistricthome1}
                       />
-                    </FormGroup>
-                  </Col>
-                </FormGroup>
-                <FormGroup>
-                  <Label htmlFor="cityhome1">Thành phố (City)</Label>
-                  <Input
-                    type="text"
-                    id="cityhome1"
-                    placeholder=""
-                    value={dataExtract.cityhome1}
-                    onChange={e => this.handleChangeCityhome1}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label htmlFor="phonenumber">Điện thoại (Phone)</Label>
-                  <Input
-                    type="text"
-                    id="phonenumber"
-                    placeholder=""
-                    value={dataExtract.phonenumber}
-                    onChange={e => this.handleChangePhonenumber}
-                  />
-                </FormGroup>
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="5">
+                      <Label htmlFor="cityhome1">Thành phố (City)</Label>
+                    </Col>
+                    <Col xs="12" md="7">
+                      <Input
+                        type="text"
+                        id="cityhome1"
+                        placeholder=""
+                        value={dataExtract.cityhome1}
+                        onChange={e => this.handleChangeCityhome1}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Col md="5">
+                      <Label htmlFor="phonenumber">Điện thoại (Phone)</Label>
+                    </Col>
+                    <Col xs="12" md="7">
+                      <Input
+                        type="text"
+                        id="phonenumber"
+                        placeholder=""
+                        value={dataExtract.phonenumber}
+                        onChange={e => this.handleChangePhonenumber}
+                      />
+                    </Col>
+                  </FormGroup>
+                </form>
               </CardBody>
-              <CardFooter>
-                <Row className="align-items-center">
-                  <Button type="submit" color="primary" className="mr-3 ml-3">
-                    Save change
-                  </Button>
-
-                  <Button type="submit" color="success">
-                    Export
-                  </Button>
-                </Row>
-              </CardFooter>
             </Card>
           </Col>
         </Row>
