@@ -25,3 +25,4 @@ export const SET_CITYHOME1 = "set_cityhome1";
 export const SET_PHONENUMBER = "set_phonenumber";
 export const SET_LOADING = "set_loading";
 export const RESET_FORM = "reset_form";
+export const SET_NLP_FLAG = "set_nlp_flag";

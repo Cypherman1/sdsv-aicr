@@ -11,7 +11,8 @@ import {
   SET_CITYHOME1,
   SET_PHONENUMBER,
   SET_LOADING,
-  RESET_FORM
+  RESET_FORM,
+  SET_NLP_FLAG
 } from "../actions/type";
 
 const INITIAL_STATE = {
@@ -26,7 +27,8 @@ const INITIAL_STATE = {
   districthome1: "",
   cityhome1: "",
   phonenumber: "",
-  loading: false
+  loading: false,
+  nlpFlag: 1
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -35,6 +37,11 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: action.payload
+      };
+    case SET_NLP_FLAG:
+      return {
+        ...state,
+        nlpFlag: action.payload
       };
     case SET_CURRENT_IMG:
       return {

@@ -174,7 +174,9 @@ class DataExtraction extends Component {
       );
       this.props.setLoading(true);
       //console.log(this.props);
-      const res = await this.props.extractData(cuid).catch(e => this.error());
+      const res = await this.props
+        .extractData(cuid, this.props.dataExtract.nlpFlag)
+        .catch(e => this.error());
       if (res.status) {
         this.openNotificationWithIcon(
           "error",

@@ -11,7 +11,8 @@ import {
   SET_CITYHOME1,
   SET_PHONENUMBER,
   SET_LOADING,
-  RESET_FORM
+  RESET_FORM,
+  SET_NLP_FLAG
 } from "./type";
 
 import axios from "axios";
@@ -30,9 +31,16 @@ export const setCurrentImg = current_img => ({
   payload: current_img
 });
 
-export const extractData = uid => async dispatch => {
+export const setNLPFlag = nlp_f => ({
+  type: SET_NLP_FLAG,
+  payload: nlp_f
+});
+
+export const extractData = (uid, nlp_f) => async dispatch => {
   try {
-    const res = await axios.post(`http://192.168.0.61:3000/api/hw/${uid}`);
+    const res = await axios.post(
+      `http://192.168.0.61:3000/api/hw/${uid}?nlp=${nlp_f}`
+    );
 
     dispatch({ type: EXTRACT_DATA, payload: res.data });
     return res.data;
