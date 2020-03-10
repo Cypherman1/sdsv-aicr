@@ -116,7 +116,7 @@ class DataExtraction extends Component {
         name: "sampleImage2"
       },
       uiSize: {
-        // height: "530px"
+        //height: "530px"
       },
       theme: myTheme,
       menu: ["shape", "filter"],
