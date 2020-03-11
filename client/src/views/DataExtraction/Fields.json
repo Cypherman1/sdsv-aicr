@@ -1,0 +1,82 @@
+{
+  "template_id": 1,
+  "template_name": "",
+  "template_config_fields": [
+    {
+      "field_type": "text-input",
+      "field_name": "ho_ten",
+      "field_label": "Họ tên",
+      "data_type": "text",
+      "value": ""
+    },
+    {
+      "field_type": "date",
+      "field_name": "ngay_sinh",
+      "field_label": "Ngày sinh",
+      "data_type": "date",
+      "value": {
+        "date": 1,
+        "month": 1,
+        "year": 2000
+      }
+    },
+    {
+      "field_type": "text-input",
+      "field_name": "quoc_tich",
+      "field_label": "Quốc tịch",
+      "data_type": "text",
+      "value": ""
+    },
+    {
+      "field_type": "text-input",
+      "field_name": "cmnd",
+      "field_label": "Số CMND/Hộ chiếu",
+      "data_type": "number",
+      "value": ""
+    },
+    {
+      "field_type": "checkbox",
+      "field_name": "tinh_trang_hon_nhan",
+      "field_label": "Tình trạng hôn nhân",
+      "options": [
+        {
+          "option_name": "doc_than",
+          "field_label": "Độc thân",
+          "checked": false
+        },
+        {
+          "option_name": "da_ket_hon",
+          "field_label": "Đã kết hôn",
+          "checked": false
+        },
+        {
+          "option_name": "khac",
+          "field_label": "Khác",
+          "checked": false
+        }
+      ]
+    },
+    {
+      "field_type": "checkbox",
+      "field_name": "tinh_trang_hon_nhan",
+      "field_label": "Tình trạng hôn nhân",
+      "options": [
+        {
+          "option_name": "doc_than",
+          "field_label": "Độc thân",
+          "checked": false
+        },
+        {
+          "option_name": "da_ket_hon",
+          "field_label": "Đã kết hôn",
+          "checked": false
+        },
+        {
+          "option_name": "khac",
+          "field_label": "Khác",
+          "checked": false
+        }
+      ]
+    }
+  ]
+}

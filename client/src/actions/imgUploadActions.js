@@ -1,36 +1,38 @@
 import axios from "axios";
 import { IMG_UPLOAD, LIST_IMG } from "./type";
+import { api_url } from "../conf";
 
 export const uploadImg = formData => async dispatch => {
   try {
-    const res = await axios.post(
-      "http://192.168.0.61:3000/api/images",
-      formData,
-      {}
-    );
+    const res = await axios.post(`${api_url}/api/images`, formData, {});
     dispatch({ type: IMG_UPLOAD, payload: res.data });
-  } catch (err) {}
+    return { success: true };
+  } catch (err) {
+    return { success: false };
+  }
 };
 
 export const listImg = () => async dispatch => {
   try {
-    var imgs = await axios.get("http://192.168.0.61:3000/api/images");
-    //console.log(res.data);
+    var imgs = await axios.get(`${api_url}/api/images`);
     dispatch({
       type: LIST_IMG,
       payload: imgs.data.map(img => ({
         ...img,
-        url: `http://192.168.0.61:3000/api/images/${img.uid}`
+        url: `${api_url}/api/images/${img.uid}`
       }))
     });
-  } catch (err) {}
+    return { success: true };
+  } catch (err) {
+    return { success: false, err };
+  }
 };
 
 export const delImg = uid => async dispatch => {
   try {
-    var res = await axios.delete(`http://192.168.0.61:3000/api/images/${uid}`);
-    return res;
+    await axios.delete(`${api_url}/api/images/${uid}`);
+    return { success: true };
   } catch (err) {
-    return { status: false };
+    return { success: false };
   }
 };

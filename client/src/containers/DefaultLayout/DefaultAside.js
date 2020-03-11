@@ -1,23 +1,9 @@
 import React, { Component } from "react";
-import {
-  Nav,
-  NavItem,
-  NavLink,
-  Progress,
-  TabContent,
-  TabPane
-} from "reactstrap";
-import PropTypes from "prop-types";
+import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import classNames from "classnames";
 import { AppSwitch } from "@coreui/react";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
-
-const propTypes = {
-  children: PropTypes.node
-};
-
-const defaultProps = {};
 
 class DefaultAside extends Component {
   state = {

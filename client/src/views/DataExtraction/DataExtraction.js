@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { reduxForm } from "redux-form";
 import {
   Card,
   CardBody,
@@ -15,6 +16,8 @@ import { connect } from "react-redux";
 import * as actions from "../../actions";
 import "../../assets/css/tui-image-editor.css";
 import ImageEditor from "@toast-ui/react-image-editor";
+import { IMEOptions } from "./IMEConf";
+import ExtractForm from "./ExtractForm";
 
 notification.config({
   placement: "bottomRight",
@@ -22,173 +25,61 @@ notification.config({
   duration: 2
 });
 
-const myTheme = {
-  "common.bi.image":
-    "https://uicdn.toast.com/toastui/img/tui-image-editor-bi.png",
-  "common.bisize.width": "251px",
-  "common.bisize.height": "21px",
-  "common.backgroundImage": "./img/bg.png",
-  "common.backgroundColor": "#fff",
-  "common.border": "1px solid #c1c1c1",
-
-  // header
-  "header.backgroundImage": "none",
-  "header.backgroundColor": "transparent",
-  "header.border": "0px",
-
-  // load button
-  "loadButton.backgroundColor": "#fff",
-  "loadButton.border": "1px solid #ddd",
-  "loadButton.color": "#222",
-  "loadButton.fontFamily": "'Noto Sans', sans-serif",
-  "loadButton.fontSize": "12px",
-
-  // download button
-  "downloadButton.backgroundColor": "#fdba3b",
-  "downloadButton.border": "1px solid #fdba3b",
-  "downloadButton.color": "#fff",
-  "downloadButton.fontFamily": "'Noto Sans', sans-serif",
-  "downloadButton.fontSize": "12px",
-
-  // main icons
-  "menu.normalIcon.path": "assets/img/svg/icon-d.svg",
-  "menu.normalIcon.name": "icon-d",
-  "menu.activeIcon.path": "assets/img/svg/icon-b.svg",
-  "menu.activeIcon.name": "icon-b",
-  "menu.disabledIcon.path": "assets/img/svg/icon-a.svg",
-  "menu.disabledIcon.name": "icon-a",
-  "menu.hoverIcon.path": "assets/img/svg/icon-c.svg",
-  "menu.hoverIcon.name": "icon-c",
-  "menu.iconSize.width": "24px",
-  "menu.iconSize.height": "24px",
-
-  // submenu primary color
-  "submenu.backgroundColor": "#1e1e1e",
-  "submenu.partition.color": "red",
-
-  // submenu icons
-  "submenu.normalIcon.path": "assets/img/svg/icon-a.svg",
-  "submenu.normalIcon.name": "icon-a",
-  "submenu.activeIcon.path": "assets/img/svg/icon-c.svg",
-  "submenu.activeIcon.name": "icon-c",
-  "submenu.iconSize.width": "32px",
-  "submenu.iconSize.height": "32px",
-
-  // submenu labels
-  "submenu.normalLabel.color": "#858585",
-  "submenu.normalLabel.fontWeight": "normal",
-  "submenu.activeLabel.color": "#000",
-  "submenu.activeLabel.fontWeight": "normal",
-
-  // checkbox style
-  "checkbox.border": "1px solid #ccc",
-  "checkbox.backgroundColor": "#fff",
-
-  // rango style
-  "range.pointer.color": "#333",
-  "range.bar.color": "#ccc",
-  "range.subbar.color": "#606060",
-
-  "range.disabledPointer.color": "#d3d3d3",
-  "range.disabledBar.color": "rgba(85,85,85,0.06)",
-  "range.disabledSubbar.color": "rgba(51,51,51,0.2)",
-
-  "range.value.color": "#000",
-  "range.value.fontWeight": "normal",
-  "range.value.fontSize": "11px",
-  "range.value.border": "0",
-  "range.value.backgroundColor": "#f5f5f5",
-  "range.title.color": "#000",
-  "range.title.fontWeight": "lighter",
-
-  // colorpicker style
-  "colorpicker.button.border": "0px",
-  "colorpicker.title.color": "#000"
-};
-
 class DataExtraction extends Component {
   editorRef = React.createRef();
-
-  imageEditorOptions = {
-    includeUI: {
-      loadImage: {
-        path: this.props.dataExtract.currentImg,
-        name: "sampleImage2"
-      },
-      uiSize: {
-        //height: "530px"
-      },
-      theme: myTheme,
-      menu: ["shape", "filter"],
-      menuBarPosition: "left"
-    },
-    //cssMaxWidth: 200
-    cssMaxHeight: 1000
-  };
   openNotificationWithIcon = (type, title, description) => {
     notification[type]({
       message: title,
       description: description
     });
   };
-
   handlePreview = async file => {
     const editorInstance = this.editorRef.current.getInstance();
-    this.props.resetForm();
+    const { resetForm, setCurrentImg } = this.props;
+    resetForm();
     editorInstance.loadImageFromURL(file.url || file.preview, "testImage");
-    this.props.setCurrentImg(file.url || file.preview);
+    setCurrentImg(file.url || file.preview);
   };
-
   handleRemove = async info => {
-    await this.props.delImg(info.uid);
-    await this.props.listImg();
+    const { delImg, listImg } = this.props;
+    await delImg(info.uid);
+    await listImg();
   };
   handleChange = info => {
+    const { uploadImg } = this.props;
     if (info.file.originFileObj) {
       const formData = new FormData();
       formData.append("file", info.file.originFileObj);
-      this.props.uploadImg(formData);
+      uploadImg(formData);
     }
   };
   componentDidMount = async () => {
-    try {
-      await this.props.listImg();
-      //const editorInstance = this.editorRef.current.getInstance();
-
-      // await this.props.setCurrentImg(this.props.imgUpload.fileList[0].url);
-      // console.log(this.props.imgUpload.fileList[0].url);
-
-      // await editorInstance.loadImageFromURL(
-      //   this.props.imgUpload.fileList[0].url,
-      //   "testImage"
-      // );
-    } catch (ex) {
-      console.log(ex);
-    }
+    const { imgUpload, setCurrentImg, listImg } = this.props;
+    const editorInstance = this.editorRef.current.getInstance();
+    await listImg();
+    await setCurrentImg(imgUpload.fileList[0].url);
+    await editorInstance.loadImageFromURL(
+      imgUpload.fileList[0].url,
+      imgUpload.fileList
+    );
   };
-
   handleClick = async () => {
-    try {
-      const cuid = this.props.dataExtract.currentImg.substring(
-        this.props.dataExtract.currentImg.lastIndexOf("/") + 1
+    const { dataExtract, setLoading, extractData } = this.props;
+    const cuid = dataExtract.currentImg.substring(
+      dataExtract.currentImg.lastIndexOf("/") + 1
+    );
+    setLoading(true);
+    const res = await extractData(cuid, dataExtract.nlpFlag);
+    if (!res.success) {
+      this.openNotificationWithIcon(
+        "error",
+        "Failed",
+        "Oops, Something go wrong!"
       );
-      this.props.setLoading(true);
-      //console.log(this.props);
-      const res = await this.props
-        .extractData(cuid, this.props.dataExtract.nlpFlag)
-        .catch(e => this.error());
-      if (res.status) {
-        this.openNotificationWithIcon(
-          "error",
-          "Failed",
-          "Oops, Something go wrong!"
-        );
-      } else {
-        this.openNotificationWithIcon("success", "Done", "Data extracted!");
-      }
-    } catch (ex) {
-      console.log(ex);
+    } else {
+      this.openNotificationWithIcon("success", "Done", "Data extracted!");
     }
+    setLoading(false);
   };
   handleChangeName = e => {
     this.props.setName(e.target.value);
@@ -217,7 +108,6 @@ class DataExtraction extends Component {
   handleChangePhonenumber = e => {
     this.props.setName(e.target.phonenumber);
   };
-
   render() {
     const { imgUpload, dataExtract } = this.props;
 
@@ -243,10 +133,7 @@ class DataExtraction extends Component {
                   Extract data
                 </Button>
               </CardHeader>
-              <ImageEditor
-                ref={this.editorRef}
-                {...this.imageEditorOptions}
-              ></ImageEditor>
+              <ImageEditor ref={this.editorRef} {...IMEOptions}></ImageEditor>
               <div className="clearfix mt-4 ml-3">
                 <Upload
                   action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -407,6 +294,7 @@ class DataExtraction extends Component {
                     </Col>
                   </FormGroup>
                 </form>
+                <ExtractForm />
               </CardBody>
             </Card>
           </Col>

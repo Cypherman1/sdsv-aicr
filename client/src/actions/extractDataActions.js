@@ -1,3 +1,5 @@
+import axios from "axios";
+import { change } from "redux-form";
 import {
   SET_CURRENT_IMG,
   EXTRACT_DATA,
@@ -15,7 +17,7 @@ import {
   SET_NLP_FLAG
 } from "./type";
 
-import axios from "axios";
+import { api_url } from "../conf";
 
 export const setLoading = loading => ({
   type: SET_LOADING,
@@ -38,14 +40,12 @@ export const setNLPFlag = nlp_f => ({
 
 export const extractData = (uid, nlp_f) => async dispatch => {
   try {
-    const res = await axios.post(
-      `http://192.168.0.61:3000/api/hw/${uid}?nlp=${nlp_f}`
-    );
-
-    dispatch({ type: EXTRACT_DATA, payload: res.data });
-    return res.data;
+    const res = await axios.post(`${api_url}/api/hw/${uid}?nlp=${nlp_f}`);
+    //dispatch({ type: EXTRACT_DATA, payload: res.data });
+    dispatch(change("eform", "name", res.data.NAME));
+    return { success: true };
   } catch (err) {
-    return { status: "fail" };
+    return { success: false, err };
   }
 };
 
