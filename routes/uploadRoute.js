@@ -26,7 +26,6 @@ module.exports = app => {
   }).single("file");
 
   app.post("/api/upload1", (req, res) => {
-    console.log(req);
     upload(req, res, function(err) {
       if (err) {
         console.log(err);

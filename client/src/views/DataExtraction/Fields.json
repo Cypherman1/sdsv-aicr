@@ -3,6 +3,7 @@
   "template_name": "",
   "template_config_fields": [
     {
+      "id": "1",
       "field_type": "text-input",
       "field_name": "ho_ten",
       "field_label": "Họ tên",
@@ -10,6 +11,7 @@
       "value": ""
     },
     {
+      "id": "2",
       "field_type": "date",
       "field_name": "ngay_sinh",
       "field_label": "Ngày sinh",
@@ -21,6 +23,7 @@
       }
     },
     {
+      "id": "3",
       "field_type": "text-input",
       "field_name": "quoc_tich",
       "field_label": "Quốc tịch",
@@ -28,6 +31,7 @@
       "value": ""
     },
     {
+      "id": "4",
       "field_type": "text-input",
       "field_name": "cmnd",
       "field_label": "Số CMND/Hộ chiếu",
@@ -35,45 +39,27 @@
       "value": ""
     },
     {
-      "field_type": "checkbox",
+      "id": "9",
+      "field_type": "checkboxes",
       "field_name": "tinh_trang_hon_nhan",
       "field_label": "Tình trạng hôn nhân",
-      "options": [
+      "value": [
         {
-          "option_name": "doc_than",
-          "field_label": "Độc thân",
+          "id": "10",
+          "name": "doc_than",
+          "label": "Độc thân",
           "checked": false
         },
         {
-          "option_name": "da_ket_hon",
-          "field_label": "Đã kết hôn",
+          "id": "11",
+          "name": "da_ket_hon",
+          "label": "Đã kết hôn",
           "checked": false
         },
         {
-          "option_name": "khac",
-          "field_label": "Khác",
-          "checked": false
-        }
-      ]
-    },
-    {
-      "field_type": "checkbox",
-      "field_name": "tinh_trang_hon_nhan",
-      "field_label": "Tình trạng hôn nhân",
-      "options": [
-        {
-          "option_name": "doc_than",
-          "field_label": "Độc thân",
-          "checked": false
-        },
-        {
-          "option_name": "da_ket_hon",
-          "field_label": "Đã kết hôn",
-          "checked": false
-        },
-        {
-          "option_name": "khac",
-          "field_label": "Khác",
+          "id": "12",
+          "name": "khac",
+          "label": "Khác",
           "checked": false
         }
       ]

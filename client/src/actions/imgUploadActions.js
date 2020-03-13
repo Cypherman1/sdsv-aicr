@@ -17,7 +17,7 @@ export const listImg = () => async dispatch => {
     var imgs = await axios.get(`${api_url}/api/images`);
     dispatch({
       type: LIST_IMG,
-      payload: imgs.data.map(img => ({
+      payload: imgs.data.data.map(img => ({
         ...img,
         url: `${api_url}/api/images/${img.uid}`
       }))

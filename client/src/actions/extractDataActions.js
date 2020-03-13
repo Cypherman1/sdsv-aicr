@@ -40,9 +40,10 @@ export const setNLPFlag = nlp_f => ({
 
 export const extractData = (uid, nlp_f) => async dispatch => {
   try {
-    const res = await axios.post(`${api_url}/api/hw/${uid}?nlp=${nlp_f}`);
+    //const res = await axios.post(`${api_url}/api/hw/${uid}?nlp=${nlp_f}`);
     //dispatch({ type: EXTRACT_DATA, payload: res.data });
-    dispatch(change("eform", "name", res.data.NAME));
+    dispatch(change("eform", "ho_ten", "abc"));
+    dispatch(change("eform", "doc_than", true));
     return { success: true };
   } catch (err) {
     return { success: false, err };
