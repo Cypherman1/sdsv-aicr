@@ -1,8 +1,33 @@
 import {
   CMN_TOGGLE_SIDER,
   CMD_SET_SIDER_COLLAPSED,
-  CMD_SET_HAS_ERR
+  CMD_SET_HAS_ERR,
+  GET_EXTRACT_TEMPLATE,
+  SET_ACTIVE_ASIDE_TAB,
+  SET_SELECTED_TEMPLATE
 } from "./type";
+
+import ExtractTemplate from "../views/DataExtraction/Fields.json";
+import IDTemplate from "../views/DataExtraction/FieldsID.json";
+
+export const getExtractTemplate = id => async dispatch => {
+  try {
+    //const res = await axios.post(`${api_url}/api/hw/${uid}?nlp=${nlp_f}`);
+    if (id === "T03") {
+      dispatch({ type: GET_EXTRACT_TEMPLATE, payload: ExtractTemplate });
+    } else if (id === "T01") {
+      dispatch({ type: GET_EXTRACT_TEMPLATE, payload: IDTemplate });
+    } else {
+      dispatch({ type: GET_EXTRACT_TEMPLATE, payload: undefined });
+    }
+
+    //dispatch(change("eform", "ho_ten", "abc"));
+    // dispatch(change("eform", "loai_hop_dong.hd_di_lam", true));
+    return { success: true };
+  } catch (err) {
+    return { success: false, err };
+  }
+};
 
 export const toggleSider = () => ({
   type: CMN_TOGGLE_SIDER
@@ -11,6 +36,16 @@ export const toggleSider = () => ({
 export const setHasError = error => ({
   type: CMD_SET_HAS_ERR,
   payload: error
+});
+
+export const setSelectedTemplate = selectedTemplate => ({
+  type: SET_SELECTED_TEMPLATE,
+  payload: selectedTemplate
+});
+
+export const setActiveAsideTab = activeAsideTab => ({
+  type: SET_ACTIVE_ASIDE_TAB,
+  payload: activeAsideTab
 });
 
 export const setSiderCollapsed = sider_collapsed => ({

@@ -1,0 +1,20 @@
+{
+  "template_id": 1,
+  "template_name": "ID Card",
+  "template_config_fields": [
+    {
+      "id": 1,
+      "field_type": "label",
+      "field_name": "id_ho_ten",
+      "field_label": "Họ và Tên",
+      "data_type": "text"
+    },
+    {
+      "id": 11,
+      "field_type": "number",
+      "field_name": "id_cmnd_old",
+      "field_label": "Số CMND/Hộ chiếu/CCCD trước đây",
+      "data_type": "text"
+    }
+  ]
+}

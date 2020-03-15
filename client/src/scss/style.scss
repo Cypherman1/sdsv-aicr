@@ -60,6 +60,11 @@ main.main {
   margin: 0 5px;
 }
 
+.eform-scroll {
+  max-height: calc(100vh - 195px);
+  overflow-y: auto;
+}
+
 .data-extraction {
   .card {
     height: calc(100vh - 125px);

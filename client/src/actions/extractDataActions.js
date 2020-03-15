@@ -18,6 +18,7 @@ import {
 } from "./type";
 
 import { api_url } from "../conf";
+import { ExtractData } from "../views/DataExtraction/ExtractData";
 
 export const setLoading = loading => ({
   type: SET_LOADING,
@@ -42,8 +43,19 @@ export const extractData = (uid, nlp_f) => async dispatch => {
   try {
     //const res = await axios.post(`${api_url}/api/hw/${uid}?nlp=${nlp_f}`);
     //dispatch({ type: EXTRACT_DATA, payload: res.data });
+    ExtractData.map(edata => {
+      if (!(edata.value instanceof Array)) {
+        dispatch(change("eform", edata.name, edata.value));
+      } else {
+        edata.value.map(evalue => {
+          dispatch(
+            change("eform", `${edata.name}.${evalue.name}`, evalue.value)
+          );
+        });
+      }
+    });
     dispatch(change("eform", "ho_ten", "abc"));
-    dispatch(change("eform", "doc_than", true));
+    // dispatch(change("eform", "loai_hop_dong.hd_di_lam", true));
     return { success: true };
   } catch (err) {
     return { success: false, err };

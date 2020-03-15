@@ -1,45 +1,117 @@
 import React, { Component } from "react";
-import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
+import {
+  Nav,
+  NavItem,
+  NavLink,
+  TabContent,
+  TabPane,
+  FormGroup,
+  Label
+} from "reactstrap";
 import classNames from "classnames";
 import { AppSwitch } from "@coreui/react";
 import { connect } from "react-redux";
+import { Tree, Input } from "antd";
 import * as actions from "../../actions";
 
-class DefaultAside extends Component {
-  state = {
-    activeTab: "1"
-  };
+const { DirectoryTree } = Tree;
+const { Search } = Input;
 
-  toggle(tab) {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab
-      });
-    }
+const treeData = [
+  {
+    title: "General Template",
+    key: "F01",
+    children: [
+      {
+        title: "ID Card",
+        key: "T01",
+        isLeaf: true
+      },
+      {
+        title: "Land Ownership Certification",
+        key: "T02",
+        isLeaf: true
+      }
+    ]
+  },
+  {
+    title: "Banking template",
+    key: "F02",
+    children: [
+      {
+        title: "Credit Card Application Form",
+        key: "T03",
+        isLeaf: true
+      },
+      {
+        title: "Home Loan Application Form",
+        key: "T04",
+        isLeaf: true
+      },
+      {
+        title: "Car Loan",
+        key: "T05",
+        isLeaf: true
+      }
+    ]
   }
+];
 
+class DefaultAside extends Component {
+  onSelect = (keys, e) => {
+    this.props.setSelectedTemplate(keys[0]);
+    if (e.selectedNodes[0].props.isLeaf) {
+      this.props.getExtractTemplate(keys[0]);
+    }
+  };
   render() {
     // eslint-disable-next-line
-    const { dataExtract, setNLPFlag } = this.props;
+    const { dataExtract, setNLPFlag, common, setActiveAsideTab } = this.props;
 
     return (
       <React.Fragment>
         <Nav tabs>
           <NavItem>
             <NavLink
-              className={classNames({ active: this.state.activeTab === "1" })}
+              className={classNames({ active: common.activeAsideTab === "1" })}
               onClick={() => {
-                this.toggle("1");
+                setActiveAsideTab("1");
+              }}
+            >
+              <i className="icon-list"></i>
+            </NavLink>
+          </NavItem>
+
+          <NavItem>
+            <NavLink
+              className={classNames({ active: common.activeAsideTab === "2" })}
+              onClick={() => {
+                setActiveAsideTab("2");
               }}
             >
               <i className="icon-settings"></i>
             </NavLink>
           </NavItem>
         </Nav>
-        <TabContent activeTab={this.state.activeTab}>
-          <TabPane tabId="1" className="p-3">
-            <h6>Settings</h6>
+        <TabContent activeTab={common.activeAsideTab}>
+          <TabPane tabId="1" className="p-3 m-3">
+            <FormGroup>
+              <Search
+                style={{ marginBottom: 8 }}
+                placeholder="Search template"
+                //onChange={this.onChange}
+              />
 
+              <DirectoryTree
+                defaultExpandAll
+                selectedKeys={[common.selectedTemplate]}
+                onSelect={this.onSelect}
+                treeData={treeData}
+              />
+            </FormGroup>
+          </TabPane>
+          <TabPane tabId="2" className="p-3">
+            <h6>Settings</h6>
             <div className="aside-options">
               <div className="clearfix mt-4">
                 <small>
@@ -71,8 +143,8 @@ class DefaultAside extends Component {
 // DefaultAside.propTypes = propTypes;
 // DefaultAside.defaultProps = defaultProps;
 
-const mapStateToProps = ({ dataExtract }) => {
-  return { dataExtract };
+const mapStateToProps = ({ dataExtract, common }) => {
+  return { dataExtract, common };
 };
 
 export default connect(mapStateToProps, actions)(DefaultAside);

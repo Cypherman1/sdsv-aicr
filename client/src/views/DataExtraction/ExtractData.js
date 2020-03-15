@@ -1,4 +1,4 @@
-[
+export const ExtractData = [
   {
     id: 1,
     name: "ho_ten",

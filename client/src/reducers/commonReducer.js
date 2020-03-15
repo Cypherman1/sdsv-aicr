@@ -1,19 +1,32 @@
 import {
   CMN_TOGGLE_SIDER,
   CMD_SET_SIDER_COLLAPSED,
-  CMD_SET_HAS_ERR
+  CMD_SET_HAS_ERR,
+  GET_EXTRACT_TEMPLATE,
+  SET_ACTIVE_ASIDE_TAB,
+  SET_SELECTED_TEMPLATE
 } from "../actions/type";
 
 const INITIAL_STATE = {
   sider_collapsed: false,
   hasError: false,
-  error: ""
+  error: "",
+  extractTemplate: {},
+  activeAsideTab: "1",
+  selectedTemplate: "T03"
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CMD_SET_SIDER_COLLAPSED:
       return { ...state, sider_collapsed: action.payload };
+    case SET_ACTIVE_ASIDE_TAB:
+      return { ...state, activeAsideTab: action.payload };
+    case SET_SELECTED_TEMPLATE:
+      return { ...state, selectedTemplate: action.payload };
+    case GET_EXTRACT_TEMPLATE:
+      console.log(action.payload);
+      return { ...state, extractTemplate: action.payload };
     case CMD_SET_HAS_ERR:
       return {
         ...state,

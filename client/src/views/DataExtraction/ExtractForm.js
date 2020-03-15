@@ -1,82 +1,52 @@
 import React, { Component } from "react";
-import { reduxForm, Field } from "redux-form";
-import { Col, FormGroup, Label } from "reactstrap";
+import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
+import * as actions from "../../actions";
 import fields from "./Fields.json";
-import TextInputField from "./TextInputField";
-import CheckBoxField from "./CheckBoxField";
-
-const renderCheckBoxes = ({ custom }) => {
-  return (
-    <div>
-      {custom.checkboxes.map(checkbox => (
-        <Field
-          key={checkbox.id}
-          name={`${custom.name}.${checkbox.name}`}
-          props={{ type: "text" }}
-          component={CheckBoxField}
-          {...{ label: checkbox.label, ischecked: custom.checked }}
-        />
-      ))}
-    </div>
-  );
-};
+import { renderTextField, renderCheckBoxesField } from "./ExtractFields";
 
 class ExtractForm extends Component {
-  renderTextInputField = (name, label) => {
-    return (
-      <Field
-        name={name}
-        props={{ type: "text" }}
-        component={TextInputField}
-        {...{ label }}
-      />
-    );
-  };
-
-  renderCheckBoxesField = (name, label, custom) => {
-    return (
-      <FormGroup row>
-        <Col xs="12" md="5">
-          <Label> {label}</Label>
-        </Col>
-        <Col xs="12" md="7">
-          <Field name={name} component={renderCheckBoxes} {...{ custom }} />
-        </Col>
-      </FormGroup>
-    );
+  componentDidMount = async () => {
+    await this.props.getExtractTemplate(this.props.common.selectedTemplate);
   };
 
   renderFields(formValues) {
     let rfields = [];
-    fields.template_config_fields.map(field => {
-      switch (field.field_type) {
-        case "text-input":
-          rfields.push(
-            <div key={field.id}>
-              {this.renderTextInputField(field.field_name, field.field_label)}
-            </div>
-          );
-          break;
-        case "checkboxes":
-          rfields.push(
-            <div key={field.id}>
-              {this.renderCheckBoxesField(field.field_name, field.field_label, {
-                name: field.field_name,
-                checkboxes: field.value,
-                checked: formValues[field.field_name]
-              })}
-            </div>
-          );
-          break;
-        default:
-      }
-    });
+    if (
+      !(this.props.common.extractTemplate === undefined) &&
+      !(this.props.common.extractTemplate.template_config_fields === undefined)
+    ) {
+      this.props.common.extractTemplate.template_config_fields.map(field => {
+        switch (field.data_type) {
+          case "text":
+            rfields.push(
+              <div key={field.id}>
+                {renderTextField(field.field_name, field.field_label)}
+              </div>
+            );
+            break;
+          case "checkboxes":
+            //console.log(field.value);
+            rfields.push(
+              <div key={field.id}>
+                {renderCheckBoxesField(
+                  field.field_name,
+                  field.field_label,
+                  field.options,
+                  formValues[field.field_name]
+                )}
+              </div>
+            );
+            break;
+          default:
+        }
+      });
+    }
     return rfields;
   }
   render() {
     const { formValues } = this.props;
-    console.log(formValues);
+    //console.log(formValues);
     return (
       <form className="form-horizontal">{this.renderFields(formValues)}</form>
     );
@@ -86,13 +56,13 @@ class ExtractForm extends Component {
 const mapStateToProps = state => {
   //console.log(this.state);
   if (state.form.eform && state.form.eform.values) {
-    return { formValues: state.form.eform.values };
+    return { formValues: state.form.eform.values, common: state.common };
   } else {
-    return { formValues: [] };
+    return { formValues: [], common: state.common };
   }
 };
 
 ExtractForm = reduxForm({ form: "eform" })(
-  connect(mapStateToProps)(ExtractForm)
+  connect(mapStateToProps, actions)(ExtractForm)
 );
 export default ExtractForm;

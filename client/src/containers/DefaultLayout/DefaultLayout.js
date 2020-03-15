@@ -81,7 +81,7 @@ class DefaultLayout extends Component {
               </Suspense>
             </Container>
           </main>
-          <AppAside fixed>
+          <AppAside>
             <Suspense fallback={this.loading()}>
               <DefaultAside />
             </Suspense>
