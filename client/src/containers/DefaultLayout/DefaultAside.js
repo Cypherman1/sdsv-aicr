@@ -58,11 +58,12 @@ const treeData = [
 ];
 
 class DefaultAside extends Component {
-  onSelect = (keys, e) => {
+  onSelect = async (keys, e) => {
     this.props.setSelectedTemplate(keys[0]);
     if (e.selectedNodes[0].props.isLeaf) {
-      this.props.getExtractTemplate(keys[0]);
+      await this.props.getExtractTemplate(keys[0]);
     }
+    await this.props.resetForm();
   };
   render() {
     // eslint-disable-next-line
