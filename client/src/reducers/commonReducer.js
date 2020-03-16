@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   error: "",
   extractTemplate: {},
   activeAsideTab: "1",
-  selectedTemplate: "T03"
+  selectedTemplate: "1"
 };
 
 export default (state = INITIAL_STATE, action) => {

@@ -48,13 +48,13 @@ class DataExtraction extends Component {
     try {
       const editorInstance = this.editorRef.current.getInstance();
 
-      // await this.props.listImg();
-      // const { imgUpload, setCurrentImg } = this.props;
-      // await setCurrentImg(imgUpload.fileList[0].url);
-      // await editorInstance.loadImageFromURL(
-      //   imgUpload.fileList[0].url,
-      //   imgUpload.fileList
-      // );
+      await this.props.listImg();
+      const { imgUpload, setCurrentImg } = this.props;
+      await setCurrentImg(imgUpload.fileList[0].url);
+      await editorInstance.loadImageFromURL(
+        imgUpload.fileList[0].url,
+        imgUpload.fileList
+      );
     } catch (err) {
       this.props.setHasError({ hasError: true, err });
     }

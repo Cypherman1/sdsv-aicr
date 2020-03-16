@@ -24,12 +24,12 @@ const treeData = [
     children: [
       {
         title: "ID Card",
-        key: "T01",
+        key: "2",
         isLeaf: true
       },
       {
         title: "Land Ownership Certification",
-        key: "T02",
+        key: "3",
         isLeaf: true
       }
     ]
@@ -40,17 +40,17 @@ const treeData = [
     children: [
       {
         title: "Credit Card Application Form",
-        key: "T03",
+        key: "1",
         isLeaf: true
       },
       {
         title: "Home Loan Application Form",
-        key: "T04",
+        key: "4",
         isLeaf: true
       },
       {
         title: "Car Loan",
-        key: "T05",
+        key: "5",
         isLeaf: true
       }
     ]

@@ -6,20 +6,26 @@ import {
   SET_ACTIVE_ASIDE_TAB,
   SET_SELECTED_TEMPLATE
 } from "./type";
-
+import axios from "axios";
+import { api_url } from "../conf";
 import ExtractTemplate from "../views/DataExtraction/Fields.json";
 import IDTemplate from "../views/DataExtraction/FieldsID.json";
 
 export const getExtractTemplate = id => async dispatch => {
   try {
-    //const res = await axios.post(`${api_url}/api/hw/${uid}?nlp=${nlp_f}`);
-    if (id === "T03") {
-      dispatch({ type: GET_EXTRACT_TEMPLATE, payload: ExtractTemplate });
-    } else if (id === "T01") {
-      dispatch({ type: GET_EXTRACT_TEMPLATE, payload: IDTemplate });
+    const res = await axios.post(`${api_url}/api/templates/${id}`);
+    if (res.data.status === "success") {
+      dispatch({ type: GET_EXTRACT_TEMPLATE, payload: res.data.data });
     } else {
       dispatch({ type: GET_EXTRACT_TEMPLATE, payload: undefined });
     }
+    // if (id === "T03") {
+    //   dispatch({ type: GET_EXTRACT_TEMPLATE, payload: ExtractTemplate });
+    // } else if (id === "T01") {
+    //   dispatch({ type: GET_EXTRACT_TEMPLATE, payload: IDTemplate });
+    // } else {
+    //   dispatch({ type: GET_EXTRACT_TEMPLATE, payload: undefined });
+    // }
 
     //dispatch(change("eform", "ho_ten", "abc"));
     // dispatch(change("eform", "loai_hop_dong.hd_di_lam", true));
