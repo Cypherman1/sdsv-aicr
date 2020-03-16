@@ -39,6 +39,7 @@ class DataExtraction extends Component {
   handleChange = info => {
     const { uploadImg } = this.props;
     if (info.file.originFileObj) {
+      console.log(info.file.originFileObj);
       const formData = new FormData();
       formData.append("file", info.file.originFileObj);
       uploadImg(formData);

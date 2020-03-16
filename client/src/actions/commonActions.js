@@ -13,24 +13,15 @@ import IDTemplate from "../views/DataExtraction/FieldsID.json";
 
 export const getExtractTemplate = id => async dispatch => {
   try {
-    const res = await axios.post(`${api_url}/api/templates/${id}`);
+    const res = await axios.get(`${api_url}/api/templates/${id}`);
     if (res.data.status === "success") {
       dispatch({ type: GET_EXTRACT_TEMPLATE, payload: res.data.data });
     } else {
       dispatch({ type: GET_EXTRACT_TEMPLATE, payload: undefined });
     }
-    // if (id === "T03") {
-    //   dispatch({ type: GET_EXTRACT_TEMPLATE, payload: ExtractTemplate });
-    // } else if (id === "T01") {
-    //   dispatch({ type: GET_EXTRACT_TEMPLATE, payload: IDTemplate });
-    // } else {
-    //   dispatch({ type: GET_EXTRACT_TEMPLATE, payload: undefined });
-    // }
-
-    //dispatch(change("eform", "ho_ten", "abc"));
-    // dispatch(change("eform", "loai_hop_dong.hd_di_lam", true));
     return { success: true };
   } catch (err) {
+    dispatch({ type: GET_EXTRACT_TEMPLATE, payload: undefined });
     return { success: false, err };
   }
 };

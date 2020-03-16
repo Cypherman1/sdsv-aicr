@@ -46,15 +46,9 @@ const DataExtraction = React.lazy(() =>
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   {
-    path: "/banking/creditcard",
+    path: "/extraction",
     exact: true,
-    name: "Credit Card",
-    component: DataExtraction
-  },
-  {
-    path: "/banking/creditcard/appform",
-    exact: true,
-    name: "Application Form",
+    name: "Data Extraction",
     component: DataExtraction
   }
 ];

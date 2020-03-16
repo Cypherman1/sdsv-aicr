@@ -11,42 +11,14 @@ export default {
     //   class: "" // optional class names space delimited list for title item ex: "text-center"
     // },
     {
-      name: "Credit Card",
-      url: "/banking/creditcard",
-      icon: "icon-credit-card",
-      children: [
-        {
-          name: "Application Form",
-          url: "/banking/creditcard/appform",
-          icon: "icon-paper-plane",
-          class: "dd-items"
-        },
-        {
-          name: "Identity Card",
-          url: "/banking/cards/identity",
-          icon: "icon-user",
-          class: "dd-items"
-        },
-        {
-          name: "Proof of Income",
-          url: "/banking/cards/identity",
-          icon: "icon-tag",
-          class: "dd-items"
-        }
-      ]
+      name: "Data Extraction",
+      url: "/extraction",
+      icon: "icon-home"
     },
     {
-      name: "Home Loan",
-      url: "/banking/homeloan",
-      icon: "icon-home",
-      children: [
-        {
-          name: "Application Form",
-          url: "/banking/homeloan/appform",
-          icon: "icon-paper-plane",
-          class: "dd-items"
-        }
-      ]
+      name: "Template Configuration",
+      url: "/templateconfig",
+      icon: "icon-pencil"
     }
     // {
     //   name: "Dashboard",

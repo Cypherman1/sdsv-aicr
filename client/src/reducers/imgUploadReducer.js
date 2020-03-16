@@ -17,10 +17,10 @@ export default (state = INITIAL_STATE, action) => {
         fileList: [
           ...state.fileList,
           {
-            uid: action.payload.image,
-            name: action.payload.image,
+            uid: action.payload.data,
+            name: action.payload.data,
             status: "done",
-            url: "http://192.168.0.61:3000/api/images/" + action.payload.image
+            url: "http://192.168.0.61:3000/api/images/" + action.payload.data
           }
         ]
       };
