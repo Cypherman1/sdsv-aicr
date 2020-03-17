@@ -3,6 +3,8 @@ import { change, reset } from "redux-form";
 import { SET_CURRENT_IMG, SET_LOADING, RESET_FORM, SET_NLP_FLAG } from "./type";
 
 import { api_url } from "../conf";
+import {renderTextField} from "../views/DataExtraction/ExtractFields";
+import React from "react";
 
 export const setLoading = loading => ({
   type: SET_LOADING,
@@ -30,11 +32,19 @@ export const extractData = (uid, nlp_f) => async dispatch => {
       if (!(edata.value instanceof Array)) {
         dispatch(change("eform", edata.name, edata.value));
       } else {
-        edata.value.map(evalue => {
-          dispatch(
-            change("eform", `${edata.name}.${evalue.name}`, evalue.value)
-          );
-        });
+        if (edata.data_type !== "group") {
+          edata.value.map(evalue => {
+            dispatch(
+              change("eform", `${edata.name}.${evalue.name}`, evalue.value)
+            );
+          });
+        } else {
+          edata.value.map(evalue => {
+            dispatch(
+              change("eform", evalue.name, evalue.value)
+            );
+          });
+        }
       }
     });
     return { success: true };

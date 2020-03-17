@@ -38,6 +38,25 @@ class ExtractForm extends Component {
               </div>
             );
             break;
+          case "group":
+            if (field.group_type === "combine") {
+              rfields.push(
+                <div key={field.id}>
+                  {renderTextField(field.field_name, field.field_label)}
+                </div>
+              );
+            } else {
+              for (let i=0; i < field.sources.length; i++) {
+                const source = field.sources[i];
+                rfields.push(
+                  <div key={source.id}>
+                    {renderTextField(source.field_name, source.field_label)}
+                  </div>
+                );
+              }
+            }
+
+            break;
           default:
         }
       });
