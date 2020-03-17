@@ -140,12 +140,15 @@ class DataExtraction extends Component {
   };
   handleChange = async info => {
     const editorInstance = this.editorRef.current.getInstance();
-    const { uploadImg } = this.props;
+    const { uploadImg, setCurrentImg } = this.props;
     if (info.file.originFileObj) {
       const formData = new FormData();
       formData.append("file", info.file.originFileObj);
       const res = await uploadImg(formData);
-      if (res.success) await editorInstance.loadImageFromURL(res.url, res.url);
+      if (res.success) {
+        await editorInstance.loadImageFromURL(res.url, "currentIMG");
+        await setCurrentImg(res.url);
+      }
     }
   };
   componentDidMount = async () => {
