@@ -94,7 +94,7 @@ export const IMEOptions = {
     theme: IMETheme,
     menu: ["shape", "filter"],
     menuBarPosition: "left"
-  }
-  //cssMaxWidth: 1000
+  },
+  cssMaxWidth: 1000
   //cssMaxHeight: 650
 };

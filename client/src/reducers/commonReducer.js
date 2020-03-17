@@ -25,7 +25,6 @@ export default (state = INITIAL_STATE, action) => {
     case SET_SELECTED_TEMPLATE:
       return { ...state, selectedTemplate: action.payload };
     case GET_EXTRACT_TEMPLATE:
-      console.log(action.payload);
       return { ...state, extractTemplate: action.payload };
     case CMD_SET_HAS_ERR:
       return {
