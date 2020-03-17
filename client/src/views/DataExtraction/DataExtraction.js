@@ -138,7 +138,7 @@ class DataExtraction extends Component {
     await delImg(info.uid);
     await listImg();
   };
-  handleChange = info => {
+  handleChange = async info => {
     const { uploadImg } = this.props;
     if (info.file.originFileObj) {
       console.log(info.file.originFileObj);
