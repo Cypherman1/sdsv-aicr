@@ -6,7 +6,7 @@ export const uploadImg = formData => async dispatch => {
   try {
     const res = await axios.post(`${api_url}/api/images`, formData, {});
     dispatch({ type: IMG_UPLOAD, payload: res.data });
-    return { success: true };
+    return { success: true, url: `${api_url}/api/images/${res.data.data}` };
   } catch (err) {
     return { success: false };
   }

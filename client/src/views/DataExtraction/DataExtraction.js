@@ -139,12 +139,13 @@ class DataExtraction extends Component {
     await listImg();
   };
   handleChange = async info => {
+    const editorInstance = this.editorRef.current.getInstance();
     const { uploadImg } = this.props;
     if (info.file.originFileObj) {
-      console.log(info.file.originFileObj);
       const formData = new FormData();
       formData.append("file", info.file.originFileObj);
-      uploadImg(formData);
+      const res = await uploadImg(formData);
+      if (res.success) await editorInstance.loadImageFromURL(res.url, res.url);
     }
   };
   componentDidMount = async () => {
@@ -208,6 +209,7 @@ class DataExtraction extends Component {
               ></ImageEditor>
               <div className="clearfix mt-4 ml-3">
                 <Upload
+                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                   listType="picture-card"
                   fileList={imgUpload.fileList}
                   onPreview={this.handlePreview}
