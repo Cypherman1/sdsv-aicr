@@ -3,9 +3,10 @@ export const CMN_TOGGLE_SIDER = "cmn_toggle_sider";
 export const CMD_SET_SIDER_COLLAPSED = "cmn_set_sider_collapsed";
 export const CMD_SET_HAS_ERR = "cmn_set_has_error";
 export const FETCH_USER = "fetch_user";
-export const GET_EXTRACT_TEMPLATE = "get_extract_template"
-export const SET_ACTIVE_ASIDE_TAB = "set_active_aside_tab"
-export const SET_SELECTED_TEMPLATE = "set_selected_template"
+export const GET_EXTRACT_TEMPLATE = "get_extract_template";
+export const SET_ACTIVE_ASIDE_TAB = "set_active_aside_tab";
+export const SET_SELECTED_TEMPLATE = "set_selected_template";
+export const SET_EDITOR_INSTANCE = "set_editor_instance";
 
 //Images upload
 

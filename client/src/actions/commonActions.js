@@ -4,7 +4,8 @@ import {
   CMD_SET_HAS_ERR,
   GET_EXTRACT_TEMPLATE,
   SET_ACTIVE_ASIDE_TAB,
-  SET_SELECTED_TEMPLATE
+  SET_SELECTED_TEMPLATE,
+  SET_EDITOR_INSTANCE
 } from "./type";
 import axios from "axios";
 import { api_url } from "../conf";
@@ -25,6 +26,11 @@ export const getExtractTemplate = id => async dispatch => {
     return { success: false, err };
   }
 };
+
+export const setEditorInstance = editorInstance => ({
+  type: SET_EDITOR_INSTANCE,
+  payload: editorInstance
+});
 
 export const toggleSider = () => ({
   type: CMN_TOGGLE_SIDER

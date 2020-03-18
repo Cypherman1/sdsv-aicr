@@ -4,7 +4,8 @@ import {
   CMD_SET_HAS_ERR,
   GET_EXTRACT_TEMPLATE,
   SET_ACTIVE_ASIDE_TAB,
-  SET_SELECTED_TEMPLATE
+  SET_SELECTED_TEMPLATE,
+  SET_EDITOR_INSTANCE
 } from "../actions/type";
 
 const INITIAL_STATE = {
@@ -13,13 +14,16 @@ const INITIAL_STATE = {
   error: "",
   extractTemplate: {},
   activeAsideTab: "1",
-  selectedTemplate: "1"
+  selectedTemplate: "1",
+  editorInstance: null
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CMD_SET_SIDER_COLLAPSED:
       return { ...state, sider_collapsed: action.payload };
+    case SET_EDITOR_INSTANCE:
+      return { ...state, editorInstance: action.payload };
     case SET_ACTIVE_ASIDE_TAB:
       return { ...state, activeAsideTab: action.payload };
     case SET_SELECTED_TEMPLATE:

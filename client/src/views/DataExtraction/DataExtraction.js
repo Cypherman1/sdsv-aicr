@@ -134,28 +134,27 @@ class DataExtraction extends Component {
     await setCurrentImg(file.url || file.preview);
   };
   handleRemove = async info => {
-    const { delImg, listImg } = this.props;
+    const { delImg, listImg, common } = this.props;
     await delImg(info.uid);
-    await listImg();
+    await listImg(common.selectedTemplate);
   };
   handleChange = async info => {
-    const editorInstance = this.editorRef.current.getInstance();
+    const { common } = this.props;
     const { uploadImg, setCurrentImg } = this.props;
     if (info.file.originFileObj) {
       const formData = new FormData();
       formData.append("file", info.file.originFileObj);
       const res = await uploadImg(formData);
       if (res.success) {
-        await editorInstance.loadImageFromURL(res.url, "currentIMG");
+        await common.editorInstance.loadImageFromURL(res.url, "currentIMG");
         await setCurrentImg(res.url);
       }
     }
   };
   componentDidMount = async () => {
     try {
-      const editorInstance = this.editorRef.current.getInstance();
-
-      await this.props.listImg();
+      this.props.setEditorInstance(this.editorRef.current.getInstance());
+      await this.props.listImg(this.props.common.selectedTemplate);
       const { imgUpload, setCurrentImg } = this.props;
       await setCurrentImg(imgUpload.fileList[0].url);
     } catch (err) {
@@ -247,8 +246,8 @@ class DataExtraction extends Component {
   }
 }
 
-const mapStateToProps = ({ imgUpload, dataExtract }) => {
-  return { imgUpload, dataExtract };
+const mapStateToProps = ({ imgUpload, dataExtract, common }) => {
+  return { imgUpload, dataExtract, common };
 };
 
 export default connect(mapStateToProps, actions)(DataExtraction);

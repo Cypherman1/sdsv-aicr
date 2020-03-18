@@ -12,16 +12,23 @@ export const uploadImg = formData => async dispatch => {
   }
 };
 
-export const listImg = () => async dispatch => {
+export const listImg = templateID => async dispatch => {
   try {
-    var imgs = await axios.get(`${api_url}/api/images`);
-    dispatch({
-      type: LIST_IMG,
-      payload: imgs.data.data.map(img => ({
-        ...img,
-        url: `${api_url}/api/images/${img.uid}`
-      }))
-    });
+    if (templateID === "1") {
+      var imgs = await axios.get(`${api_url}/api/images`);
+      dispatch({
+        type: LIST_IMG,
+        payload: imgs.data.data.map(img => ({
+          ...img,
+          url: `${api_url}/api/images/${img.uid}`
+        }))
+      });
+    } else {
+      dispatch({
+        type: LIST_IMG,
+        payload: []
+      });
+    }
     return { success: true };
   } catch (err) {
     return { success: false, err };

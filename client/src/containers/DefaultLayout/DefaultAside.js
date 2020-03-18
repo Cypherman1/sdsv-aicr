@@ -13,6 +13,7 @@ import { AppSwitch } from "@coreui/react";
 import { connect } from "react-redux";
 import { Tree, Input } from "antd";
 import * as actions from "../../actions";
+//import noimg from "";
 
 const { DirectoryTree } = Tree;
 const { Search } = Input;
@@ -64,6 +65,13 @@ class DefaultAside extends Component {
       await this.props.getExtractTemplate(keys[0]);
     }
     await this.props.resetForm();
+    await this.props.listImg(this.props.common.selectedTemplate);
+    await this.props.common.editorInstance.loadImageFromURL(
+      this.props.imgUpload.fileList.length === 0
+        ? "./assets/img/no-image.png"
+        : this.props.imgUpload.fileList[0].url,
+      "noimg"
+    );
   };
   render() {
     // eslint-disable-next-line
@@ -144,8 +152,8 @@ class DefaultAside extends Component {
 // DefaultAside.propTypes = propTypes;
 // DefaultAside.defaultProps = defaultProps;
 
-const mapStateToProps = ({ dataExtract, common }) => {
-  return { dataExtract, common };
+const mapStateToProps = ({ dataExtract, common, imgUpload }) => {
+  return { dataExtract, common, imgUpload };
 };
 
 export default connect(mapStateToProps, actions)(DefaultAside);
