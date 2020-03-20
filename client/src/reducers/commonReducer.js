@@ -15,7 +15,8 @@ const INITIAL_STATE = {
   extractTemplate: {},
   activeAsideTab: "1",
   selectedTemplate: "1",
-  editorInstance: null
+  editorInstance: null,
+  test: "abc"
 };
 
 export default (state = INITIAL_STATE, action) => {

@@ -8,16 +8,20 @@ const keys = require("./config/keys");
 const dotenv = require("dotenv");
 require("./models/User");
 require("./models/UploadedImgs");
+require("./models/Templates");
 require("./services/passport");
+
 const path = require("path");
 
 dotenv.config();
 
 mongoose.Promise = global.Promise;
-mongoose.connect(keys.mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+mongoose
+  .connect(keys.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .catch(err => console.log(err));
 
 const app = express();
 
@@ -44,6 +48,7 @@ app.use(passport.session());
 
 require("./routes/authRoutes")(app);
 require("./routes/uploadRoute")(app);
+require("./routes/templateRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
   // Express will serve up production assets

@@ -2,8 +2,6 @@ const multer = require("multer");
 const mongoose = require("mongoose");
 const axios = require("axios");
 const FormData = require("form-data");
-const path = require("path");
-const fs = require("fs");
 
 const UploadedImgs = mongoose.model("uploadImgs");
 
