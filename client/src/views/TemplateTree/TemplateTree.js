@@ -67,9 +67,9 @@ const useTreeItemStyles = makeStyles(theme => ({
 
 const useStyles = makeStyles({
   root: {
-    height: 264,
+    height: 350,
     flexGrow: 1,
-    maxWidth: 400
+    maxWidth: 700
   }
 });
 
