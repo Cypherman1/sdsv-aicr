@@ -5,74 +5,22 @@ import {
   NavLink,
   TabContent,
   TabPane,
-  FormGroup,
-  Label
+  FormGroup
 } from "reactstrap";
 import classNames from "classnames";
 import { AppSwitch } from "@coreui/react";
 import { connect } from "react-redux";
-import { Tree, Input } from "antd";
+import { Input } from "antd";
 import * as actions from "../../actions";
-//import noimg from "";
+import TemplateTree from "../../views/TemplateTree/TemplateTree";
 
-const { DirectoryTree } = Tree;
 const { Search } = Input;
 
-const treeData = [
-  {
-    title: "General Template",
-    key: "F01",
-    children: [
-      {
-        title: "ID Card",
-        key: "2",
-        isLeaf: true
-      },
-      {
-        title: "Land Ownership Certification",
-        key: "3",
-        isLeaf: true
-      }
-    ]
-  },
-  {
-    title: "Banking template",
-    key: "F02",
-    children: [
-      {
-        title: "Credit Card Application Form",
-        key: "1",
-        isLeaf: false,
-        children: [
-          {
-            title: "Home Loan Application Form",
-            key: "11",
-            isLeaf: false,
-            children: [
-              {
-                title: "Home Loan Application Form",
-                key: "12",
-                isLeaf: true
-              }
-            ]
-          }
-        ]
-      },
-      {
-        title: "Home Loan Application Form",
-        key: "4",
-        isLeaf: true
-      },
-      {
-        title: "Car Loan",
-        key: "5",
-        isLeaf: true
-      }
-    ]
-  }
-];
-
 class DefaultAside extends Component {
+  //classes = useStyles();
+  componentDidMount() {
+    this.props.loadTplTree();
+  }
   onSelect = async (keys, e) => {
     this.props.setSelectedTemplate(keys[0]);
     if (e.selectedNodes[0].props.isLeaf) {
@@ -87,6 +35,7 @@ class DefaultAside extends Component {
       "noimg"
     );
   };
+
   render() {
     // eslint-disable-next-line
     const { dataExtract, setNLPFlag, common, setActiveAsideTab } = this.props;
@@ -122,15 +71,9 @@ class DefaultAside extends Component {
               <Search
                 style={{ marginBottom: 8 }}
                 placeholder="Search template"
-                //onChange={this.onChange}
               />
 
-              <DirectoryTree
-                defaultExpandAll
-                selectedKeys={[common.selectedTemplate]}
-                onSelect={this.onSelect}
-                treeData={treeData}
-              />
+              {<TemplateTree />}
             </FormGroup>
           </TabPane>
           <TabPane tabId="2" className="p-3">
@@ -166,8 +109,8 @@ class DefaultAside extends Component {
 // DefaultAside.propTypes = propTypes;
 // DefaultAside.defaultProps = defaultProps;
 
-const mapStateToProps = ({ dataExtract, common, imgUpload }) => {
-  return { dataExtract, common, imgUpload };
+const mapStateToProps = ({ dataExtract, common, imgUpload, tplTree }) => {
+  return { dataExtract, common, imgUpload, tplTree };
 };
 
 export default connect(mapStateToProps, actions)(DefaultAside);

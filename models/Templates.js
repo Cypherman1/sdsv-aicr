@@ -5,8 +5,8 @@ var TemplatesChema = new Schema();
 
 TemplatesChema.add({
   _id: mongoose.Types.ObjectId,
-  title: String,
-  key: mongoose.Types.ObjectId,
+  label: String,
+  nodeId: mongoose.Types.ObjectId,
   level: Number,
   isLeaf: Boolean,
   children: [TemplatesChema]

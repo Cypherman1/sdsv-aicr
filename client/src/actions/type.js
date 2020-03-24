@@ -7,6 +7,7 @@ export const GET_EXTRACT_TEMPLATE = "get_extract_template";
 export const SET_ACTIVE_ASIDE_TAB = "set_active_aside_tab";
 export const SET_SELECTED_TEMPLATE = "set_selected_template";
 export const SET_EDITOR_INSTANCE = "set_editor_instance";
+export const TOGGLE_ASDIDE_APP = "toggle_aside_app";
 
 //Images upload
 
@@ -30,3 +31,17 @@ export const SET_PHONENUMBER = "set_phonenumber";
 export const SET_LOADING = "set_loading";
 export const RESET_FORM = "reset_form";
 export const SET_NLP_FLAG = "set_nlp_flag";
+
+//Template Tree
+
+export const LOAD_TEMPLTE_TREE = "load_template_tree";
+export const SET_EXPANDED = "set_expanded";
+export const SET_SELECTED = "set_selected";
+export const SET_TEMPLATE_MODAL_VISIBLE = "set_template_modal_visible";
+export const SET_MODAL_ACTION = "set_modal_action";
+export const ADD_NEW_TEMPLATE = "add_new_template";
+export const ADD_NEW_FOLDER = "add_new_folder";
+export const RENAME_TEMPLATE_FOLDER = "rename_template_folder";
+export const REMOVE_TEMPLATE_FOLDER = "remove_template_folder";
+export const APPEND_EXPANDED = "append_expanded";
+export const SET_UPDATING = "set_updating";

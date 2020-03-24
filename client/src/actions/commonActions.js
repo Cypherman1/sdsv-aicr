@@ -5,12 +5,13 @@ import {
   GET_EXTRACT_TEMPLATE,
   SET_ACTIVE_ASIDE_TAB,
   SET_SELECTED_TEMPLATE,
-  SET_EDITOR_INSTANCE
+  SET_EDITOR_INSTANCE,
+  TOGGLE_ASDIDE_APP
 } from "./type";
 import axios from "axios";
 import { api_url } from "../conf";
-import ExtractTemplate from "../views/DataExtraction/Fields.json";
-import IDTemplate from "../views/DataExtraction/FieldsID.json";
+// import ExtractTemplate from "../views/DataExtraction/Fields.json";
+// import IDTemplate from "../views/DataExtraction/FieldsID.json";
 
 export const getExtractTemplate = id => async dispatch => {
   try {
@@ -34,6 +35,10 @@ export const setEditorInstance = editorInstance => ({
 
 export const toggleSider = () => ({
   type: CMN_TOGGLE_SIDER
+});
+
+export const toggleAsideApp = () => ({
+  type: TOGGLE_ASDIDE_APP
 });
 
 export const setHasError = error => ({

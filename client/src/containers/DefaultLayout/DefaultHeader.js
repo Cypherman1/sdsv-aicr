@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import * as actions from "../../actions";
 import {
   Badge,
   UncontrolledDropdown,
@@ -9,28 +11,14 @@ import {
   Nav,
   NavItem
 } from "reactstrap";
-import PropTypes from "prop-types";
 
-import {
-  AppAsideToggler,
-  AppNavbarBrand,
-  AppSidebarToggler
-} from "@coreui/react";
+import { AppNavbarBrand, AppSidebarToggler } from "@coreui/react";
 //import logo from "../../assets/img/brand/aicr.png";
 import logo from "../../assets/img/brand/aicr.png";
 import sygnet from "../../assets/img/brand/brightics_logo.png";
 
-const propTypes = {
-  children: PropTypes.node
-};
-
-const defaultProps = {};
-
 class DefaultHeader extends Component {
   render() {
-    // eslint-disable-next-line
-    const { children, ...attributes } = this.props;
-
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
@@ -108,14 +96,25 @@ class DefaultHeader extends Component {
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>
-        <AppAsideToggler className="d-md-down-none" />
+        {/* <AppAsideToggler className="d-md-down-none" /> */}
+        <button
+          className="navbar-toggler aside-menu-toggler"
+          type="button"
+          data-toggle="aside-menu-show"
+          onClick={() => {
+            this.props.toggleAsideApp();
+          }}
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
         {/*<AppAsideToggler className="d-lg-none" mobile />*/}
       </React.Fragment>
     );
   }
 }
 
-DefaultHeader.propTypes = propTypes;
-DefaultHeader.defaultProps = defaultProps;
+const mapStateToProps = ({ common }) => {
+  return { common };
+};
 
-export default DefaultHeader;
+export default connect(mapStateToProps, actions)(DefaultHeader);

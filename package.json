@@ -13,6 +13,7 @@
   "author": "SDSRV",
   "license": "ISC",
   "dependencies": {
+    "@ant-design/icons": "^4.0.3",
     "@ant-design/pro-layout": "^4.10.1",
     "@toast-ui/react-image-editor": "^1.2.0",
     "axios": "^0.19.2",

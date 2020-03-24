@@ -2,6 +2,8 @@ import React, { Component, Suspense } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import * as router from "react-router-dom";
 import { Container } from "reactstrap";
+import { connect } from "react-redux";
+import * as actions from "../../actions";
 
 import {
   AppAside,
@@ -35,7 +37,11 @@ class DefaultLayout extends Component {
 
   render() {
     return (
-      <div className="app">
+      <div
+        className={`app ${
+          this.props.common.asideAppShowed ? "aside-menu-show" : ""
+        }`}
+      >
         <AppHeader fixed>
           <Suspense fallback={this.loading()}>
             <DefaultHeader onLogout={e => this.signOut(e)} />
@@ -51,11 +57,7 @@ class DefaultLayout extends Component {
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
-              <AppSidebarNav
-                navConfig={navigation}
-                {...this.props}
-                router={router}
-              />
+              <AppSidebarNav navConfig={navigation} router={router} />
             </Suspense>
             <AppSidebarFooter />
             <AppSidebarMinimizer />
@@ -97,4 +99,8 @@ class DefaultLayout extends Component {
   }
 }
 
-export default DefaultLayout;
+const mapStateToProps = ({ common }) => {
+  return { common };
+};
+
+export default connect(mapStateToProps, actions)(DefaultLayout);

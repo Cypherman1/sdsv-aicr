@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { Card, CardBody, CardHeader, Col, Row } from "reactstrap";
-import { Upload, Icon, notification, Button } from "antd";
+import { Upload, notification, Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 import "../../assets/css/tui-image-editor.css";
 import ImageEditor from "@toast-ui/react-image-editor";
 //import { IMEOptions } from "./IMEConf";
 import ExtractForm from "./ExtractForm";
-import ErrorBoundary from "../../containers/ErrorBoundary";
+// import ErrorBoundary from "../../containers/ErrorBoundary";
 
 notification.config({
   placement: "bottomRight",
@@ -185,7 +187,7 @@ class DataExtraction extends Component {
 
     const uploadButton = (
       <div>
-        <Icon type="plus" />
+        <PlusOutlined />
         <div className="ant-upload-text">Upload</div>
       </div>
     );

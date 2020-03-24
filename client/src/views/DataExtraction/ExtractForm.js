@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
-import fields from "./Fields.json";
 import { renderTextField, renderCheckBoxesField } from "./ExtractFields";
 
 class ExtractForm extends Component {
@@ -46,7 +45,7 @@ class ExtractForm extends Component {
                 </div>
               );
             } else {
-              for (let i=0; i < field.sources.length; i++) {
+              for (let i = 0; i < field.sources.length; i++) {
                 const source = field.sources[i];
                 rfields.push(
                   <div key={source.id}>

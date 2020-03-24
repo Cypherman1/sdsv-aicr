@@ -19,7 +19,9 @@ mongoose.Promise = global.Promise;
 mongoose
   .connect(keys.mongoURI, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    dbName: "aicrdb"
   })
   .catch(err => console.log(err));
 

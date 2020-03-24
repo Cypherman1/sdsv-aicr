@@ -1,10 +1,8 @@
 import axios from "axios";
 import { change, reset } from "redux-form";
-import { SET_CURRENT_IMG, SET_LOADING, RESET_FORM, SET_NLP_FLAG } from "./type";
+import { SET_CURRENT_IMG, SET_LOADING, SET_NLP_FLAG } from "./type";
 
 import { api_url } from "../conf";
-import {renderTextField} from "../views/DataExtraction/ExtractFields";
-import React from "react";
 
 export const setLoading = loading => ({
   type: SET_LOADING,
@@ -40,9 +38,7 @@ export const extractData = (uid, nlp_f) => async dispatch => {
           });
         } else {
           edata.value.map(evalue => {
-            dispatch(
-              change("eform", evalue.name, evalue.value)
-            );
+            dispatch(change("eform", evalue.name, evalue.value));
           });
         }
       }

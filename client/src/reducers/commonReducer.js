@@ -5,7 +5,8 @@ import {
   GET_EXTRACT_TEMPLATE,
   SET_ACTIVE_ASIDE_TAB,
   SET_SELECTED_TEMPLATE,
-  SET_EDITOR_INSTANCE
+  SET_EDITOR_INSTANCE,
+  TOGGLE_ASDIDE_APP
 } from "../actions/type";
 
 const INITIAL_STATE = {
@@ -16,7 +17,8 @@ const INITIAL_STATE = {
   activeAsideTab: "1",
   selectedTemplate: "1",
   editorInstance: null,
-  test: "abc"
+  test: "abc",
+  asideAppShowed: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -39,6 +41,8 @@ export default (state = INITIAL_STATE, action) => {
       };
     case CMN_TOGGLE_SIDER:
       return { ...state, sider_collapsed: !state.sider_collapsed };
+    case TOGGLE_ASDIDE_APP:
+      return { ...state, asideAppShowed: !state.asideAppShowed };
     default:
       return state;
   }
