@@ -10,12 +10,13 @@ import {
 
 const INITIAL_STATE = {
   treeData: [],
-  selected: "5e7839c34f0d94548138c0d0",
-  expanded: ["5e7833d0c7b9ee53ea9f148d", "5e7839c34f0d94548138c0d0"],
+  selected: "5e7ae2a64017b62da83f836c",
+  expanded: ["5e7adf9b15eaef2c5f9c28f5", "5e7ae2a64017b62da83f836c"],
   isTemplate: true,
   tmlVisible: false,
   modalAction: "",
   selectedLabel: "",
+  selectedTemplateId: "",
   loading: false
 };
 

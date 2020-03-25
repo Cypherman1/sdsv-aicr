@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const Templates = mongoose.model("Templates");
+const ImgsTemplate = mongoose.model("ImgsTemplate");
 
 let found = false;
 let tmp;
@@ -52,8 +53,36 @@ module.exports = app => {
       const templates = await Templates.find({});
       await recursiveFind(templates, req.body._id, found);
       if (tmp) {
-        res.status(200).json({ isTemplate: tmp.isLeaf, label: tmp.label });
+        res.status(200).json({
+          isTemplate: tmp.isLeaf,
+          label: tmp.label,
+          templateId: tmp.templateId
+        });
       }
+    } catch (err) {
+      res.status(500).json({ error: err });
+    }
+  });
+
+  app.post("/api/template/add_img", async (req, res) => {
+    const _id = new mongoose.Types.ObjectId();
+    const ImgTemplate = new ImgsTemplate({
+      _id: _id,
+      imgId: req.body.imgId,
+      templateId: req.body.templateId
+    });
+    try {
+      const result = await ImgTemplate.save();
+      res.status(200).json(result);
+    } catch (err) {
+      res.status(500).json({ error: err });
+    }
+  });
+
+  app.post("/api/template/get_imgs", async (req, res) => {
+    try {
+      const imgs = await ImgsTemplate.find({ templateId: req.body.templateId });
+      res.status(200).json(imgs);
     } catch (err) {
       res.status(500).json({ error: err });
     }
@@ -66,6 +95,7 @@ module.exports = app => {
       nodeId: _id,
       label: req.body.label,
       isLeaf: req.body.isLeaf,
+      templateId: req.body.templateId,
       level: 1,
       children: []
     });
@@ -101,6 +131,7 @@ module.exports = app => {
           level: tmp.level + 1,
           label: req.body.label,
           isLeaf: req.body.isLeaf,
+          templateId: req.body.templateId,
           children: []
         });
         tmp.children.push(child);

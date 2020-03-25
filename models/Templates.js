@@ -7,6 +7,7 @@ TemplatesChema.add({
   _id: mongoose.Types.ObjectId,
   label: String,
   nodeId: mongoose.Types.ObjectId,
+  templateId: String,
   level: Number,
   isLeaf: Boolean,
   children: [TemplatesChema]

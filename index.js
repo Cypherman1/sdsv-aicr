@@ -9,6 +9,7 @@ const dotenv = require("dotenv");
 require("./models/User");
 require("./models/UploadedImgs");
 require("./models/Templates");
+require("./models/ImgsTemplate");
 require("./services/passport");
 
 const path = require("path");

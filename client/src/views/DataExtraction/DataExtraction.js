@@ -142,11 +142,11 @@ class DataExtraction extends Component {
   };
   handleChange = async info => {
     const { common } = this.props;
-    const { uploadImg, setCurrentImg } = this.props;
+    const { uploadImg, setCurrentImg, tplTree } = this.props;
     if (info.file.originFileObj) {
       const formData = new FormData();
       formData.append("file", info.file.originFileObj);
-      const res = await uploadImg(formData);
+      const res = await uploadImg(formData, tplTree.selectedTemplateId);
       if (res.success) {
         await common.editorInstance.loadImageFromURL(res.url, "currentIMG");
         await setCurrentImg(res.url);
@@ -156,7 +156,7 @@ class DataExtraction extends Component {
   componentDidMount = async () => {
     try {
       this.props.setEditorInstance(this.editorRef.current.getInstance());
-      await this.props.listImg(this.props.common.selectedTemplate);
+      await this.props.listImg(this.props.tplTree.selectedTemplateId);
       const { imgUpload, setCurrentImg } = this.props;
       await setCurrentImg(imgUpload.fileList[0].url);
     } catch (err) {
@@ -248,8 +248,8 @@ class DataExtraction extends Component {
   }
 }
 
-const mapStateToProps = ({ imgUpload, dataExtract, common }) => {
-  return { imgUpload, dataExtract, common };
+const mapStateToProps = ({ imgUpload, dataExtract, common, tplTree }) => {
+  return { imgUpload, dataExtract, common, tplTree };
 };
 
 export default connect(mapStateToProps, actions)(DataExtraction);

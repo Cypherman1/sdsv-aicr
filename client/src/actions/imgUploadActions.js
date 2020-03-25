@@ -2,9 +2,13 @@ import axios from "axios";
 import { IMG_UPLOAD, LIST_IMG } from "./type";
 import { api_url } from "../conf";
 
-export const uploadImg = formData => async dispatch => {
+export const uploadImg = (formData, templateId) => async dispatch => {
   try {
     const res = await axios.post(`${api_url}/api/images`, formData, {});
+    await axios.post("/api/template/add_img", {
+      templateId,
+      imgId: res.data.data
+    });
     dispatch({ type: IMG_UPLOAD, payload: res.data });
     return { success: true, url: `${api_url}/api/images/${res.data.data}` };
   } catch (err) {
@@ -12,23 +16,18 @@ export const uploadImg = formData => async dispatch => {
   }
 };
 
-export const listImg = templateID => async dispatch => {
+export const listImg = templateId => async dispatch => {
   try {
-    if (templateID === "1") {
-      var imgs = await axios.get(`${api_url}/api/images`);
-      dispatch({
-        type: LIST_IMG,
-        payload: imgs.data.data.map(img => ({
-          ...img,
-          url: `${api_url}/api/images/${img.uid}`
-        }))
-      });
-    } else {
-      dispatch({
-        type: LIST_IMG,
-        payload: []
-      });
-    }
+    var imgs = await axios.post(`api/template/get_imgs`, { templateId });
+    dispatch({
+      type: LIST_IMG,
+      payload: imgs.data.map(img => ({
+        uid: img.imgId,
+        name: `image${img.imgId}`,
+        url: `${api_url}/api/images/${img.imgId}`
+      }))
+    });
+
     return { success: true };
   } catch (err) {
     return { success: false, err };

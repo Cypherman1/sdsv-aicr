@@ -78,6 +78,7 @@ const TemplateTree = ({
   tplTree,
   setExpanded,
   setSelected,
+  listImg,
   setTplModalVisible,
   removeTemplateFolder,
   setModalAction
@@ -203,6 +204,10 @@ const TemplateTree = ({
     </StyledTreeItem>
   );
 
+  const onSelected = async (event, value) => {
+    await setSelected(value);
+  };
+
   return [
     <TreeView
       key="1"
@@ -212,7 +217,7 @@ const TemplateTree = ({
       defaultEndIcon={<div style={{ width: 24 }} />}
       selected={tplTree.selected}
       expanded={tplTree.expanded}
-      onNodeSelect={(event, value) => setSelected(value)}
+      onNodeSelect={(event, value) => onSelected(event, value)}
       onNodeToggle={(event, nodeIds) => setExpanded(nodeIds)}
     >
       {tplTree.treeData[0] ? renderNode(tplTree.treeData[0]) : null}

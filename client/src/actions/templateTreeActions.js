@@ -1,5 +1,6 @@
 import axios from "axios";
 import { reset } from "redux-form";
+import { api_url } from "../conf";
 import {
   LOAD_TEMPLTE_TREE,
   SET_EXPANDED,
@@ -8,6 +9,7 @@ import {
   SET_MODAL_ACTION,
   APPEND_EXPANDED,
   SET_UPDATING,
+  LIST_IMG,
   ADD_NEW_TEMPLATE,
   ADD_NEW_FOLDER,
   REMOVE_TEMPLATE_FOLDER,
@@ -42,14 +44,15 @@ export const addNewTemplate = (parentId, label, isLeaf) => async dispatch => {
     const res = await axios.post(`/api/template/addtokey`, {
       parentId,
       label,
-      isLeaf
+      isLeaf,
+      templateId: "0"
     });
 
     dispatch({ type: LOAD_TEMPLTE_TREE, payload: [res.data.tree] });
 
     dispatch({
       type: SET_SELECTED,
-      payload: { selected: res.data.id, istemplate: isLeaf }
+      payload: { selected: res.data.id, istemplate: isLeaf, templateId: "0" }
     });
 
     dispatch({
@@ -96,9 +99,24 @@ export const setSelected = selected => async dispatch => {
       payload: {
         selected,
         istemplate: res.data.isTemplate,
-        label: res.data.label
+        label: res.data.label,
+        templateId: res.data.templateId
       }
     });
+
+    var imgs = await axios.post(`api/template/get_imgs`, {
+      templateId: res.data.templateId
+    });
+
+    dispatch({
+      type: LIST_IMG,
+      payload: imgs.data.map(img => ({
+        uid: img.imgId,
+        name: `image${img.imgId}`,
+        url: `${api_url}/api/images/${img.imgId}`
+      }))
+    });
+
     return { success: true };
   } catch (err) {
     return { success: false, error: err };
