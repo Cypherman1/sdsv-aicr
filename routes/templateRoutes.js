@@ -79,6 +79,18 @@ module.exports = app => {
     }
   });
 
+  app.post("/api/template/del_img", async (req, res) => {
+    try {
+      const result = await ImgsTemplate.deleteMany({
+        imgId: req.body.imgId
+      });
+      res.status(200).json(result);
+    } catch (err) {
+      console.log("err" + err);
+      res.status(500).json({ error: err });
+    }
+  });
+
   app.post("/api/template/get_imgs", async (req, res) => {
     try {
       const imgs = await ImgsTemplate.find({ templateId: req.body.templateId });

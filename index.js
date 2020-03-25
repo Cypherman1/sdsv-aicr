@@ -22,6 +22,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false,
     dbName: "aicrdb"
   })
   .catch(err => console.log(err));

@@ -37,6 +37,9 @@ export const listImg = templateId => async dispatch => {
 export const delImg = uid => async dispatch => {
   try {
     await axios.delete(`${api_url}/api/images/${uid}`);
+
+    await axios.post("/api/template/del_img", { imgId: uid });
+
     return { success: true };
   } catch (err) {
     return { success: false };

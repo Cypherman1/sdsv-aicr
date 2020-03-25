@@ -136,9 +136,9 @@ class DataExtraction extends Component {
     await setCurrentImg(file.url || file.preview);
   };
   handleRemove = async info => {
-    const { delImg, listImg, common } = this.props;
+    const { delImg, listImg, tplTree } = this.props;
     await delImg(info.uid);
-    await listImg(common.selectedTemplate);
+    await listImg(tplTree.selectedTemplateId);
   };
   handleChange = async info => {
     const { common } = this.props;
