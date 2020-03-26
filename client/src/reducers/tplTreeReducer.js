@@ -39,7 +39,8 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         selected: action.payload.selected,
         isTemplate: action.payload.istemplate,
-        selectedLabel: action.payload.label
+        selectedLabel: action.payload.label,
+        selectedTemplateId: action.payload.templateId
       };
     default:
       return state;

@@ -78,6 +78,7 @@ const TemplateTree = ({
   tplTree,
   setExpanded,
   setSelected,
+  imgUpload,
   listImg,
   setTplModalVisible,
   removeTemplateFolder,
@@ -206,6 +207,15 @@ const TemplateTree = ({
 
   const onSelected = async (event, value) => {
     await setSelected(value);
+    //console.log(JSON.stringifyevent);
+    if (common.editorInstance) {
+      await common.editorInstance.loadImageFromURL(
+        imgUpload.fileList.length === 0
+          ? "./assets/img/no-image.png"
+          : imgUpload.fileList[0].url,
+        "noimg"
+      );
+    }
   };
 
   return [
