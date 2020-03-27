@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
-import { renderTextField, renderCheckBoxesField } from "./ExtractFields";
+import { renderTextField, renderCheckBoxesField, renderImageField } from "./ExtractFields";
 
 class ExtractForm extends Component {
   componentDidMount = async () => {
@@ -54,7 +54,13 @@ class ExtractForm extends Component {
                 );
               }
             }
-
+            break;
+          case "image":
+            rfields.push(
+              <div key={field.id}>
+                {renderImageField(field.field_name, field.field_label)}
+              </div>
+            );
             break;
           default:
         }
