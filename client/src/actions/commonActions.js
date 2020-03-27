@@ -15,12 +15,14 @@ import { api_url } from "../conf";
 
 export const getExtractTemplate = id => async dispatch => {
   try {
+    console.log(`${api_url}/api/templates/${id}`);
     const res = await axios.get(`${api_url}/api/templates/${id}`);
     if (res.data.status === "success") {
       dispatch({ type: GET_EXTRACT_TEMPLATE, payload: res.data.data });
     } else {
       dispatch({ type: GET_EXTRACT_TEMPLATE, payload: undefined });
     }
+
     return { success: true };
   } catch (err) {
     dispatch({ type: GET_EXTRACT_TEMPLATE, payload: undefined });

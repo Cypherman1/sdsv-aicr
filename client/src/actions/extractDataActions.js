@@ -23,9 +23,13 @@ export const setNLPFlag = nlp_f => ({
   payload: nlp_f
 });
 
-export const extractData = (uid, nlp_f) => async dispatch => {
+export const extractData = (uid, templateId, nlp_f) => async dispatch => {
   try {
-    const res = await axios.post(`${api_url}/api/hw/${uid}?nlp=${nlp_f}`);
+    const res = await axios.post(`${api_url}/api/aicr/extract`, {
+      template_id: templateId,
+      image_id: uid,
+      nlp: nlp_f
+    });
     res.data.map(edata => {
       if (!(edata.value instanceof Array)) {
         dispatch(change("eform", edata.name, edata.value));

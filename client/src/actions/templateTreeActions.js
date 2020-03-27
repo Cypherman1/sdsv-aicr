@@ -1,5 +1,7 @@
 import axios from "axios";
 import { reset } from "redux-form";
+import { listImg } from "./imgUploadActions";
+import { getExtractTemplate } from "./commonActions";
 import { api_url } from "../conf";
 import {
   LOAD_TEMPLTE_TREE,
@@ -10,6 +12,7 @@ import {
   APPEND_EXPANDED,
   SET_UPDATING,
   LIST_IMG,
+  GET_EXTRACT_TEMPLATE,
   ADD_NEW_TEMPLATE,
   ADD_NEW_FOLDER,
   REMOVE_TEMPLATE_FOLDER,
@@ -91,13 +94,15 @@ export const setTplModalVisible = visible => ({
   payload: visible
 });
 
-export const setSelected = selected => async dispatch => {
+export const setSelected = isselected => async dispatch => {
   try {
-    const res = await axios.post(`/api/template/istemplate`, { _id: selected });
+    const res = await axios.post(`/api/template/istemplate`, {
+      _id: isselected
+    });
     dispatch({
       type: SET_SELECTED,
       payload: {
-        selected,
+        selected: isselected,
         istemplate: res.data.isTemplate,
         label: res.data.label,
         templateId: res.data.templateId
@@ -117,8 +122,20 @@ export const setSelected = selected => async dispatch => {
       }))
     });
 
+    await listImg(res.data.templateId);
+
+    const res1 = await axios.get(
+      `${api_url}/api/templates/${res.data.templateId}`
+    );
+    if (res1.data.status === "success") {
+      dispatch({ type: GET_EXTRACT_TEMPLATE, payload: res1.data.data });
+    } else {
+      dispatch({ type: GET_EXTRACT_TEMPLATE, payload: undefined });
+    }
+
     return { success: true };
   } catch (err) {
+    console.log(err);
     return { success: false, error: err };
   }
 };

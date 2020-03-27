@@ -164,12 +164,16 @@ class DataExtraction extends Component {
     }
   };
   handleClick = async () => {
-    const { dataExtract, setLoading, extractData } = this.props;
+    const { dataExtract, setLoading, extractData, tplTree } = this.props;
     const cuid = dataExtract.currentImg.substring(
       dataExtract.currentImg.lastIndexOf("/") + 1
     );
     setLoading(true);
-    const res = await extractData(cuid, dataExtract.nlpFlag);
+    const res = await extractData(
+      cuid,
+      tplTree.selectedTemplateId,
+      dataExtract.nlpFlag
+    );
     if (!res.success) {
       this.openNotificationWithIcon(
         "error",
