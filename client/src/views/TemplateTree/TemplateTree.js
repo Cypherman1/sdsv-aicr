@@ -206,14 +206,7 @@ const TemplateTree = ({
   );
 
   const onSelected = async (event, value) => {
-    await setSelected(value);
-    if (common.editorInstance) {
-      console.log("abc");
-      await common.editorInstance.loadImageFromURL(
-        "./assets/img/no-image.png",
-        "noimg"
-      );
-    }
+    await setSelected(value, common.editorInstance);
   };
 
   return [

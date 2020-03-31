@@ -16,7 +16,8 @@ import {
   ADD_NEW_TEMPLATE,
   ADD_NEW_FOLDER,
   REMOVE_TEMPLATE_FOLDER,
-  RENAME_TEMPLATE_FOLDER
+  RENAME_TEMPLATE_FOLDER,
+  SET_CURRENT_IMG
 } from "./type";
 
 export const loadTplTree = () => async dispatch => {
@@ -94,7 +95,7 @@ export const setTplModalVisible = visible => ({
   payload: visible
 });
 
-export const setSelected = isselected => async dispatch => {
+export const setSelected = (isselected, editorInstance) => async dispatch => {
   try {
     const res = await axios.post(`/api/template/istemplate`, {
       _id: isselected
@@ -122,7 +123,22 @@ export const setSelected = isselected => async dispatch => {
       }))
     });
 
-    await listImg(res.data.templateId);
+    if (editorInstance) {
+      dispatch({
+        type: SET_CURRENT_IMG,
+        payload:
+          imgs.length === 0
+            ? "./assets/img/no-image.png"
+            : `${api_url}/api/images/${imgs.data[0].imgId}`
+      });
+
+      await editorInstance.loadImageFromURL(
+        imgs.length === 0
+          ? "./assets/img/no-image.png"
+          : `${api_url}/api/images/${imgs.data[0].imgId}`,
+        "noimg"
+      );
+    }
 
     const res1 = await axios.get(
       `${api_url}/api/templates/${res.data.templateId}`
