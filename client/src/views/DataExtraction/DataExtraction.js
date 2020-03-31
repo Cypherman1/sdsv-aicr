@@ -164,7 +164,13 @@ class DataExtraction extends Component {
     }
   };
   handleClick = async () => {
-    const { dataExtract, setLoading, extractData, tplTree } = this.props;
+    const {
+      dataExtract,
+      setLoading,
+      extractData,
+      tplTree,
+      common
+    } = this.props;
     const cuid = dataExtract.currentImg.substring(
       dataExtract.currentImg.lastIndexOf("/") + 1
     );
@@ -174,6 +180,7 @@ class DataExtraction extends Component {
       tplTree.selectedTemplateId,
       dataExtract.nlpFlag
     );
+
     if (!res.success) {
       this.openNotificationWithIcon(
         "error",
@@ -181,6 +188,10 @@ class DataExtraction extends Component {
         "Oops, Something go wrong!"
       );
     } else {
+      await common.editorInstance.loadImageFromURL(
+        `${dataExtract.currentImg}?box=1`,
+        "boxedimg"
+      );
       this.openNotificationWithIcon("success", "Done", "Data extracted!");
     }
     setLoading(false);
