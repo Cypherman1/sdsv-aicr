@@ -149,6 +149,8 @@ export const setSelected = (isselected, editorInstance) => async dispatch => {
       dispatch({ type: GET_EXTRACT_TEMPLATE, payload: undefined });
     }
 
+    dispatch(reset("eform"));
+
     return { success: true };
   } catch (err) {
     console.log(err);
