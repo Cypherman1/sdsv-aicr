@@ -25,11 +25,18 @@ export const setNLPFlag = nlp_f => ({
 
 export const extractData = (uid, templateId, nlp_f) => async dispatch => {
   try {
-    const res = await axios.post(`${api_url}/api/aicr/extract`, {
-      template_id: templateId,
-      image_id: uid,
-      nlp: nlp_f
-    });
+    let res;
+    if (templateId === "1") {
+      res = await axios.post(
+        `http://192.168.0.61:4000/api/hw/${uid}?nlp=${nlp_f}`
+      );
+    } else {
+      res = await axios.post(`${api_url}/api/aicr/extract`, {
+        template_id: templateId,
+        image_id: uid,
+        nlp: nlp_f
+      });
+    }
     res.data.map(edata => {
       if (!(edata.value instanceof Array)) {
         dispatch(change("eform", edata.name, edata.value));
@@ -47,6 +54,7 @@ export const extractData = (uid, templateId, nlp_f) => async dispatch => {
         }
       }
     });
+
     return { success: true };
   } catch (err) {
     return { success: false, err };

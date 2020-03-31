@@ -9,12 +9,18 @@ export const TextInputField = ({ input, meta, label }) => (
   </FormGroup>
 );
 
-export const ImageField = ({ image, meta, label, source }) => (
-  <FormGroup>
-    <Label>{label}</Label>
-    <img src={source === undefined ? "/assets/img/no_img.jpg" : source} alt="" className="form-control aicr-image"/>
-  </FormGroup>
-);
+export const ImageField = ({ input, meta, label, source }) => {
+  return (
+    <FormGroup>
+      <Label>{label}</Label>
+      <img
+        src={!input.value ? "" : `data:image/jpeg;base64,${input.value}`}
+        alt=""
+        className="form-control aicr-image"
+      />
+    </FormGroup>
+  );
+};
 
 export const renderCheckBox = ({ input, meta, label, ischecked }) => (
   <FormGroup check className="checkbox">
@@ -78,7 +84,7 @@ export const renderImageField = (name, label, source) => (
   <Field
     name={name}
     source={source}
-    props={{ type: "image"}}
+    props={{ type: "image" }}
     component={ImageField}
     {...{ label }}
   />
