@@ -161,7 +161,7 @@ class WorkareaHandler {
      * @param {boolean} [loaded]
      * @returns
      */
-    public setResponsiveImage = (source: string | File, loaded?: boolean) => {
+    public setResponsiveImage = (source: string | File, loaded?: boolean, onFinish = () => {}) => {
         const { canvas, workarea, editable } = this.handler;
         const imageFromUrl = (src: string) => {
             fabric.Image.fromURL(src, (img: any) => {
@@ -223,6 +223,7 @@ class WorkareaHandler {
                 canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
                 this.handler.zoomHandler.zoomToPoint(new fabric.Point(center.left, center.top), scaleX);
                 canvas.renderAll();
+                onFinish();
             });
         };
         if (!source) {
@@ -256,10 +257,10 @@ class WorkareaHandler {
      * @param {boolean} [loaded=false]
      * @returns
      */
-    setImage = (source: string | File, loaded = false) => {
+    setImage = (source: string | File, loaded = false, onFinish = () => {}) => {
         const { canvas, workarea, editable } = this.handler;
         if (workarea.layout === 'responsive') {
-            this.setResponsiveImage(source, loaded);
+            this.setResponsiveImage(source, loaded, onFinish);
             return;
         }
         const imageFromUrl = (src: string) => {
@@ -324,6 +325,7 @@ class WorkareaHandler {
                 canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
                 this.handler.zoomHandler.zoomToPoint(new fabric.Point(center.left, center.top), 1);
                 canvas.renderAll();
+                onFinish()
             });
         };
         if (!source) {
