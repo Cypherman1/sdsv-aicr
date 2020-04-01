@@ -4,7 +4,16 @@ import { api_url } from "../conf";
 
 export const uploadImg = (formData, templateId) => async dispatch => {
   try {
-    const res = await axios.post(`${api_url}/api/images`, formData, {});
+    let res;
+    if (templateId === "1") {
+      res = await axios.post(
+        `http://192.168.0.61:4000/api/images`,
+        formData,
+        {}
+      );
+    } else {
+      res = await axios.post(`${api_url}/api/images`, formData, {});
+    }
     await axios.post("/api/template/add_img", {
       templateId,
       imgId: res.data.data
