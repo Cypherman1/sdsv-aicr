@@ -52,20 +52,22 @@ main.main {
   }
 }
 
-.ant-upload-list-item,
-.ant-upload-list-picture-card-container,
-.ant-upload {
-  width: 64px !important;
-  height: 64px !important;
-  margin: 0 5px;
-}
-
 .eform-scroll {
   max-height: calc(100vh - 195px);
   overflow-y: auto;
 }
 
 .data-extraction {
+  
+  .ant-upload-list-item,
+  .ant-upload-list-picture-card-container,
+  .ant-upload {
+    width: 64px !important;
+    height: 64px !important;
+    margin: 0 5px;
+  }
+
+
   .card {
     height: calc(100vh - 125px);
     min-height: 500px;

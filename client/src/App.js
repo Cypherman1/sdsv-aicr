@@ -22,7 +22,14 @@ class App extends Component {
       <HashRouter>
           <React.Suspense fallback={loading()}>
             <Switch>
-              <Route path="/template" name="Editor" render={props => <ImageMapEditor {...props}/>} />
+              <Route path="/template" name="Editor" render={props =>
+                <div className="rde-main">
+                  <div className="rde-content">
+                    <ImageMapEditor {...props}/> 
+                  </div>
+                </div>
+                }
+              />
               <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />
               <Route exact path="/register" name="Register Page" render={props => <Register {...props}/>} />
               <Route exact path="/404" name="Page 404" render={props => <Page404 {...props}/>} />

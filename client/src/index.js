@@ -9,6 +9,9 @@ import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
+import { LocaleProvider } from 'antd';
+import enUS from 'antd/lib/locale-provider/en_US';
+import { i18nClient } from './editor/i18n';
 
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
@@ -21,7 +24,9 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <LocaleProvider locale={enUS}>
+      <App />
+    </LocaleProvider>
   </Provider>,
   document.getElementById("root")
 );
