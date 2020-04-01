@@ -16,8 +16,8 @@ export default {
       icon: "icon-home"
     },
     {
-      name: "Template Configuration",
-      url: "/templateconfig",
+      name: "Template Editor",
+      url: "/editor",
       icon: "icon-pencil"
     }
     // {

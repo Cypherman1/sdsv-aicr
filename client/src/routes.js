@@ -43,6 +43,10 @@ const DataExtraction = React.lazy(() =>
   import("./views/DataExtraction/DataExtraction")
 );
 
+const TemplateEditor = React.lazy(() =>
+  import("./views/TemplateEditor/TemplateEditor")
+);
+
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   {
@@ -50,6 +54,12 @@ const routes = [
     exact: true,
     name: "Data Extraction",
     component: DataExtraction
+  },
+  {
+    path: "/editor",
+    exact: true,
+    name: "Template Editor",
+    component: TemplateEditor
   }
 ];
 

@@ -127,13 +127,13 @@ export const setSelected = (isselected, editorInstance) => async dispatch => {
       dispatch({
         type: SET_CURRENT_IMG,
         payload:
-          imgs.length === 0
+          imgs.data.length === 0
             ? "./assets/img/no-image.png"
             : `${api_url}/api/images/${imgs.data[0].imgId}`
       });
 
       await editorInstance.loadImageFromURL(
-        imgs.length === 0
+        imgs.data.length === 0
           ? "./assets/img/no-image.png"
           : `${api_url}/api/images/${imgs.data[0].imgId}`,
         "noimg"
