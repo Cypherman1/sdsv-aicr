@@ -17,6 +17,192 @@ import Container from "../common/Container";
 import CommonButton from "../common/CommonButton";
 import Canvas from "../canvas/Canvas";
 
+const fields = [
+  {
+    id: 1,
+    name: "serial",
+    type: "string",
+    label: "Ký hiệu",
+    position: {
+      left: 1330,
+      top: 251
+    },
+    size: {
+      width: 139,
+      height: 41
+    }
+  },
+  {
+    id: 2,
+    name: "vendor_name",
+    type: "string",
+    label: "Tên bên bán hàng",
+    position: {
+      left: 84,
+      top: 405
+    },
+    size: {
+      width: 660,
+      height: 51
+    }
+  },
+  {
+    id: 3,
+    name: "no_id",
+    type: "number",
+    label: "Số hóa đơn",
+    position: {
+      left: 1251,
+      top: 306
+    },
+    size: {
+      width: 112,
+      height: 45
+    }
+  },
+  {
+    id: 4,
+    name: "date_exp",
+    type: "date",
+    label: "Ngày xuất",
+    position: {
+      left: 685,
+      top: 335
+    },
+    size: {
+      width: 39,
+      height: 41
+    }
+  },
+  {
+    id: 5,
+    name: "month_exp",
+    type: "date",
+    label: "Tháng xuất",
+    position: {
+      left: 868,
+      top: 336
+    },
+    size: {
+      width: 38,
+      height: 40
+    }
+  },
+  {
+    id: 6,
+    name: "year_exp",
+    type: "date",
+    label: "Năm xuất",
+    position: {
+      left: 1018,
+      top: 337
+    },
+    size: {
+      width: 68,
+      height: 38
+    }
+  },
+  {
+    id: 7,
+    name: "name_company",
+    type: "date",
+    label: "Tên đơn vị",
+    position: {
+      left: 420,
+      top: 724
+    },
+    size: {
+      width: 1027,
+      height: 43
+    }
+  },
+  {
+    id: 8,
+    name: "addr_company",
+    type: "address",
+    label: "Địa chỉ",
+    position: {
+      left: 310,
+      top: 770
+    },
+    size: {
+      width: 1119,
+      height: 44
+    }
+  },
+  {
+    id: 9,
+    name: "tax_code",
+    type: "number",
+    label: "Mã số thuế",
+    position: {
+      left: 366,
+      top: 861
+    },
+    size: {
+      width: 311,
+      height: 33
+    }
+  },
+  {
+    id: 10,
+    name: "total_money",
+    type: "number",
+    label: "Cộng tiền hàng",
+    position: {
+      left: 1305,
+      top: 1510
+    },
+    size: {
+      width: 192,
+      height: 43
+    }
+  },
+  {
+    id: 11,
+    name: "amount_in_word",
+    type: "string",
+    label: "Số tiền viết bằng chữ",
+    position: {
+      left: 583,
+      top: 1560
+    },
+    size: {
+      width: 885,
+      height: 44
+    }
+  },
+  {
+    id: 12,
+    name: "exchange_rate",
+    type: "string",
+    label: "Tỷ giá",
+    position: {
+      left: 397,
+      top: 1516
+    },
+    size: {
+      width: 347,
+      height: 33
+    }
+  },
+  {
+    id: 13,
+    name: "signature",
+    type: "image",
+    label: "Chữ ký",
+    position: {
+      left: 144,
+      top: 1630
+    },
+    size: {
+      width: 1391,
+      height: 417
+    },
+    data_type: "image"
+  }
+];
+
 const propertiesToInclude = [
   "id",
   "name",
@@ -46,7 +232,7 @@ const propertiesToInclude = [
 ];
 
 const defaultOption = {
-  fill: "rgba(0, 0, 0, 1)",
+  fill: "rgba(0, 0, 255, 0.1)",
   stroke: "rgba(255, 255, 255, 0)",
   strokeUniform: true,
   resource: {},
@@ -109,7 +295,33 @@ class ImageMapEditor extends Component {
     this.shortcutHandlers.esc();
 
     this.canvasRef.handler.workareaHandler.setImage(
-      "http://192.168.0.61:3000/api/images/197"
+      "http://192.168.0.61:3000/api/images/197",
+      false,
+      () => {
+        const area = this.canvasRef.handler.workarea;
+
+        fields.forEach(field => {
+          const option = {
+            type: "rect",
+            id: field.id,
+            name: field.name,
+            width: field.size.width,
+            height: field.size.height
+          };
+          const object = this.canvasRef.handler.add(option);
+          this.canvasRef.handler.setByObject(
+            object,
+            "top",
+            area.top + field.position.top
+          );
+          this.canvasRef.handler.setByObject(
+            object,
+            "left",
+            area.left + field.position.left
+          );
+          this.canvasRef.handler.setByObject(object, "borderColor", "#ff0000");
+        });
+      }
     );
   }
 

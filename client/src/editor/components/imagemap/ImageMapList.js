@@ -37,7 +37,6 @@ class ImageMapList extends Component {
         const idCropping = canvasRef ? canvasRef.handler.interactionMode === 'crop' : false;
         return canvasRef ? (
             canvasRef.canvas.getObjects().filter((obj) => {
-                console.log(obj);
                 if (obj.id === 'workarea') {
                     return false;
                 }
