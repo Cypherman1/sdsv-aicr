@@ -20,7 +20,7 @@ export default (state = INITIAL_STATE, action) => {
             uid: action.payload.data,
             name: action.payload.data,
             status: "done",
-            url: "http://192.168.0.61:3000/api/images/" + action.payload.data
+            url: "http://107.120.70.222:3000/api/images/" + action.payload.data
           }
         ]
       };

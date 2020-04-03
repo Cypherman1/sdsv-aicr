@@ -7,7 +7,7 @@ export const uploadImg = (formData, templateId) => async dispatch => {
     let res;
     if (templateId === "1") {
       res = await axios.post(
-        `http://192.168.0.61:4000/api/images`,
+        `http://107.120.70.222:4000/api/images`,
         formData,
         {}
       );

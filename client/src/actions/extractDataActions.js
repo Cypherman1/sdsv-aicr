@@ -28,7 +28,7 @@ export const extractData = (uid, templateId, nlp_f) => async dispatch => {
     let res;
     if (templateId === "1") {
       res = await axios.post(
-        `http://192.168.0.61:4000/api/hw/${uid}?nlp=${nlp_f}`
+        `http://107.120.70.222:4000/api/hw/${uid}?nlp=${nlp_f}`
       );
     } else {
       res = await axios.post(`${api_url}/api/aicr/extract`, {

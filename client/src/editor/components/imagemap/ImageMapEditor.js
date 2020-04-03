@@ -8,7 +8,7 @@ import ImageMapItems from './ImageMapItems';
 import ImageMapTitle from './ImageMapTitle';
 import ImageMapHeaderToolbar from './ImageMapHeaderToolbar';
 import ImageMapPreview from './ImageMapPreview';
-import ImageMapConfigurations from './ImageMapConfigurations';
+import ImageFields from './ImageFields';
 import SandBox from '../sandbox/SandBox';
 
 import '../../libs/fontawesome-5.2.0/css/all.css';
@@ -291,7 +291,7 @@ class ImageMapEditor extends Component {
         });
         this.shortcutHandlers.esc();
 
-        this.canvasRef.handler.workareaHandler.setImage('http://192.168.0.61:3000/api/images/197', false, () => {
+        this.canvasRef.handler.workareaHandler.setImage('http://107.120.70.222:3000/api/images/197', false, () => {
             const area = this.canvasRef.handler.workarea;
             
 
@@ -896,7 +896,7 @@ class ImageMapEditor extends Component {
         );
         const content = (
             <div className="rde-editor">
-                <ImageMapItems ref={(c) => { this.itemsRef = c; }} canvasRef={this.canvasRef} descriptors={descriptors} />
+                {/* <ImageMapItems ref={(c) => { this.itemsRef = c; }} canvasRef={this.canvasRef} descriptors={descriptors} /> */}
                 <div className="rde-editor-canvas-container">
                     <div className="rde-editor-header-toolbar">
                         <ImageMapHeaderToolbar canvasRef={this.canvasRef} selectedItem={selectedItem} onSelect={onSelect} />
@@ -928,7 +928,7 @@ class ImageMapEditor extends Component {
                         <ImageMapFooterToolbar canvasRef={this.canvasRef} preview={preview} onChangePreview={onChangePreview} zoomRatio={zoomRatio} />
                     </div>
                 </div>
-                <ImageMapConfigurations
+                <ImageFields
                     canvasRef={this.canvasRef}
                     onChange={onChange}
                     selectedItem={selectedItem}
@@ -939,7 +939,7 @@ class ImageMapEditor extends Component {
                     styles={styles}
                     dataSources={dataSources}
                 />
-                <ImageMapPreview ref={(c) => { this.preview = c; }} preview={preview} onChangePreview={onChangePreview} onTooltip={onTooltip} onClick={onClick} />
+                {/* <ImageMapPreview ref={(c) => { this.preview = c; }} preview={preview} onChangePreview={onChangePreview} onTooltip={onTooltip} onClick={onClick} /> */}
             </div>
         );
         return (
