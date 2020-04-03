@@ -162,7 +162,7 @@ export const setSelected = (
       common.canvasRef.handler.workareaHandler.setImage(
         imgs.length === 0
           ? "./assets/img/no-image.png"
-          : `${api_url}/api/images/${imgs.data[0].imgId}`,
+          : `${api_url}/api/images/${res1.data.data.image_source}`,
         false,
         () => {
           const area = common.canvasRef.handler.workarea;
