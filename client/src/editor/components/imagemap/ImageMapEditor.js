@@ -10,6 +10,7 @@ import ImageMapHeaderToolbar from "./ImageMapHeaderToolbar";
 import ImageMapPreview from "./ImageMapPreview";
 import ImageMapConfigurations from "./ImageMapConfigurations";
 import SandBox from "../sandbox/SandBox";
+import ImageFields from "./ImageFields";
 
 import "../../libs/fontawesome-5.2.0/css/all.css";
 import "../../styles/index.scss";
