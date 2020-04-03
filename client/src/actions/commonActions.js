@@ -6,7 +6,9 @@ import {
   SET_ACTIVE_ASIDE_TAB,
   SET_SELECTED_TEMPLATE,
   SET_EDITOR_INSTANCE,
-  TOGGLE_ASDIDE_APP
+  TOGGLE_ASDIDE_APP,
+  SET_MAIN_MENU_ID,
+  SET_CANVAS_REF
 } from "./type";
 import axios from "axios";
 import { api_url } from "../conf";
@@ -29,6 +31,16 @@ export const getExtractTemplate = id => async dispatch => {
     return { success: false, err };
   }
 };
+
+export const setCanvasRef = canvasRef => ({
+  type: SET_CANVAS_REF,
+  payload: canvasRef
+});
+
+export const setMainMenuId = mainMenuId => ({
+  type: SET_MAIN_MENU_ID,
+  payload: mainMenuId
+});
 
 export const setEditorInstance = editorInstance => ({
   type: SET_EDITOR_INSTANCE,

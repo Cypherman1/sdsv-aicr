@@ -95,8 +95,13 @@ export const setTplModalVisible = visible => ({
   payload: visible
 });
 
-export const setSelected = (isselected, editorInstance) => async dispatch => {
+export const setSelected = (
+  isselected,
+  common,
+  imgUpload
+) => async dispatch => {
   try {
+    // data extraction
     const res = await axios.post(`/api/template/istemplate`, {
       _id: isselected
     });
@@ -109,7 +114,7 @@ export const setSelected = (isselected, editorInstance) => async dispatch => {
         templateId: res.data.templateId
       }
     });
-
+    // Get images uploaded for the template
     var imgs = await axios.post(`api/template/get_imgs`, {
       templateId: res.data.templateId
     });
@@ -122,24 +127,16 @@ export const setSelected = (isselected, editorInstance) => async dispatch => {
         url: `${api_url}/api/images/${img.imgId}`
       }))
     });
-
-    if (editorInstance) {
-      dispatch({
-        type: SET_CURRENT_IMG,
-        payload:
-          imgs.length === 0
-            ? "./assets/img/no-image.png"
-            : `${api_url}/api/images/${imgs.data[0].imgId}`
-      });
-
-      await editorInstance.loadImageFromURL(
+    // Set default current image
+    dispatch({
+      type: SET_CURRENT_IMG,
+      payload:
         imgs.length === 0
           ? "./assets/img/no-image.png"
-          : `${api_url}/api/images/${imgs.data[0].imgId}`,
-        "noimg"
-      );
-    }
+          : `${api_url}/api/images/${imgs.data[0].imgId}`
+    });
 
+    // Get and set template field configuration
     const res1 = await axios.get(
       `${api_url}/api/templates/${res.data.templateId}`
     );
@@ -148,8 +145,61 @@ export const setSelected = (isselected, editorInstance) => async dispatch => {
     } else {
       dispatch({ type: GET_EXTRACT_TEMPLATE, payload: undefined });
     }
+    if (common.mainMenuId === 1) {
+      // Set default current image
+      if (common.editorInstance) {
+        await common.editorInstance.loadImageFromURL(
+          imgs.length === 0
+            ? "./assets/img/no-image.png"
+            : `${api_url}/api/images/${imgs.data[0].imgId}`,
+          "noimg"
+        );
+      }
+      //Reset extracted form
+      dispatch(reset("eform"));
+    } else if (common.mainMenuId === 2) {
+      //Template Editor
+      common.canvasRef.handler.workareaHandler.setImage(
+        imgs.length === 0
+          ? "./assets/img/no-image.png"
+          : `${api_url}/api/images/${imgs.data[0].imgId}`,
+        false,
+        () => {
+          const area = common.canvasRef.handler.workarea;
 
-    dispatch(reset("eform"));
+          if (res1.data.status === "success") {
+            common.canvasRef.handler.clear();
+            res1.data.data.template_config_fields.map(field => {
+              if (field.data_type !== "group") {
+                const option = {
+                  type: "rect",
+                  id: field.id,
+                  name: field.name,
+                  width: field.size.width,
+                  height: field.size.height
+                };
+                const object = common.canvasRef.handler.add(option);
+                common.canvasRef.handler.setByObject(
+                  object,
+                  "top",
+                  area.top + field.position.top
+                );
+                common.canvasRef.handler.setByObject(
+                  object,
+                  "left",
+                  area.left + field.position.left
+                );
+                common.canvasRef.handler.setByObject(
+                  object,
+                  "borderColor",
+                  "#ff0000"
+                );
+              }
+            });
+          }
+        }
+      );
+    }
 
     return { success: true };
   } catch (err) {

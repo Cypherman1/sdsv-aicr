@@ -23,7 +23,7 @@ mongoose
     useUnifiedTopology: true,
     useCreateIndex: true,
     useFindAndModify: false,
-    dbName: "aicrdb"
+    dbName: "aicr"
   })
   .catch(err => console.log(err));
 

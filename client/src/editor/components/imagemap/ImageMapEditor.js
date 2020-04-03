@@ -16,6 +16,8 @@ import "../../styles/index.scss";
 import Container from "../common/Container";
 import CommonButton from "../common/CommonButton";
 import Canvas from "../canvas/Canvas";
+import { connect } from "react-redux";
+import * as actions from "../../../actions";
 
 const fields = [
   {
@@ -278,7 +280,9 @@ class ImageMapEditor extends Component {
   };
 
   componentDidMount() {
+    const { imgUpload, common, setMainMenuId, setCanvasRef } = this.props;
     this.showLoading(true);
+    setMainMenuId(2);
     import("./Descriptors.json").then(descriptors => {
       this.setState(
         {
@@ -294,35 +298,7 @@ class ImageMapEditor extends Component {
     });
     this.shortcutHandlers.esc();
 
-    this.canvasRef.handler.workareaHandler.setImage(
-      "http://192.168.0.61:3000/api/images/197",
-      false,
-      () => {
-        const area = this.canvasRef.handler.workarea;
-
-        fields.forEach(field => {
-          const option = {
-            type: "rect",
-            id: field.id,
-            name: field.name,
-            width: field.size.width,
-            height: field.size.height
-          };
-          const object = this.canvasRef.handler.add(option);
-          this.canvasRef.handler.setByObject(
-            object,
-            "top",
-            area.top + field.position.top
-          );
-          this.canvasRef.handler.setByObject(
-            object,
-            "left",
-            area.left + field.position.left
-          );
-          this.canvasRef.handler.setByObject(object, "borderColor", "#ff0000");
-        });
-      }
-    );
+    setCanvasRef(this.canvasRef);
   }
 
   canvasHandlers = {
@@ -1100,4 +1076,8 @@ class ImageMapEditor extends Component {
   }
 }
 
-export default ImageMapEditor;
+const mapStateToProps = ({ imgUpload, dataExtract, common, tplTree }) => {
+  return { imgUpload, dataExtract, common, tplTree };
+};
+
+export default connect(mapStateToProps, actions)(ImageMapEditor);

@@ -65,7 +65,7 @@ module.exports = app => {
         formData.append("file", req.file.buffer);
 
         axios
-          .post("http://192.168.0.61:3000/api/images", formData, {})
+          .post("http://107.120.70.222:3000/api/images", formData, {})
           .then(res => console.log(res.data))
           .catch(err => console.log(err));
       }

@@ -6,7 +6,9 @@ import {
   SET_ACTIVE_ASIDE_TAB,
   SET_SELECTED_TEMPLATE,
   SET_EDITOR_INSTANCE,
-  TOGGLE_ASDIDE_APP
+  TOGGLE_ASDIDE_APP,
+  SET_MAIN_MENU_ID,
+  SET_CANVAS_REF
 } from "../actions/type";
 
 const INITIAL_STATE = {
@@ -17,7 +19,8 @@ const INITIAL_STATE = {
   activeAsideTab: "1",
   selectedTemplate: "1",
   editorInstance: null,
-  test: "abc",
+  mainMenuId: 0,
+  canvasRef: null,
   asideAppShowed: false
 };
 
@@ -27,6 +30,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, sider_collapsed: action.payload };
     case SET_EDITOR_INSTANCE:
       return { ...state, editorInstance: action.payload };
+    case SET_MAIN_MENU_ID:
+      return { ...state, mainMenuId: action.payload };
+    case SET_CANVAS_REF:
+      return { ...state, canvasRef: action.payload };
     case SET_ACTIVE_ASIDE_TAB:
       return { ...state, activeAsideTab: action.payload };
     case SET_SELECTED_TEMPLATE:

@@ -206,7 +206,7 @@ const TemplateTree = ({
   );
 
   const onSelected = async (event, value) => {
-    await setSelected(value, common.editorInstance);
+    await setSelected(value, common, imgUpload);
   };
 
   return [

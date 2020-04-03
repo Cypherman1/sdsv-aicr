@@ -147,6 +147,7 @@ class DataExtraction extends Component {
       const formData = new FormData();
       formData.append("file", info.file.originFileObj);
       const res = await uploadImg(formData, tplTree.selectedTemplateId);
+      console.log(res);
       if (res.success) {
         await common.editorInstance.loadImageFromURL(res.url, "currentIMG");
         await setCurrentImg(res.url);
@@ -154,9 +155,11 @@ class DataExtraction extends Component {
     }
   };
   componentDidMount = async () => {
+    const { setEditorInstance, listImg, tplTree, setMainMenuId } = this.props;
+    setMainMenuId(1);
     try {
-      this.props.setEditorInstance(this.editorRef.current.getInstance());
-      await this.props.listImg(this.props.tplTree.selectedTemplateId);
+      setEditorInstance(this.editorRef.current.getInstance());
+      await listImg(tplTree.selectedTemplateId);
       const { imgUpload, setCurrentImg } = this.props;
       await setCurrentImg(imgUpload.fileList[0].url);
     } catch (err) {

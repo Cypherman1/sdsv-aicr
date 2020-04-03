@@ -8,6 +8,8 @@ export const SET_ACTIVE_ASIDE_TAB = "set_active_aside_tab";
 export const SET_SELECTED_TEMPLATE = "set_selected_template";
 export const SET_EDITOR_INSTANCE = "set_editor_instance";
 export const TOGGLE_ASDIDE_APP = "toggle_aside_app";
+export const SET_MAIN_MENU_ID = "set_main_menu_id";
+export const SET_CANVAS_REF = "set_canvas_ref";
 
 //Images upload
 
