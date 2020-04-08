@@ -1,19 +1,30 @@
 import axios from "axios";
 import { IMG_UPLOAD, LIST_IMG } from "./type";
-import { api_url } from "../conf";
+import { api_url, api_token } from "../conf";
 
 export const uploadImg = (formData, templateId) => async dispatch => {
   try {
     let res;
     if (templateId === "1") {
-      res = await axios.post(
-        `http://107.120.70.222:4000/api/images`,
-        formData,
-        {}
-      );
+      res = await axios({
+        method: "post",
+        url: `http://107.120.70.222:4000/api/images`,
+        data: formData,
+        headers: {
+          Authorization: `Basic ${api_token}`
+        }
+      });
     } else {
-      res = await axios.post(`${api_url}/api/images`, formData, {});
+      res = await axios({
+        method: "post",
+        url: `http://107.120.70.222:4000/api/images`,
+        data: formData,
+        headers: {
+          Authorization: `Basic ${api_token}`
+        }
+      });
     }
+
     await axios.post("/api/template/add_img", {
       templateId,
       imgId: res.data.data
@@ -45,7 +56,11 @@ export const listImg = templateId => async dispatch => {
 
 export const delImg = uid => async dispatch => {
   try {
-    await axios.delete(`${api_url}/api/images/${uid}`);
+    await axios.delete(`${api_url}/api/images/${uid}`, {
+      headers: {
+        Authorization: `Basic ${api_token}`
+      }
+    });
 
     await axios.post("/api/template/del_img", { imgId: uid });
 

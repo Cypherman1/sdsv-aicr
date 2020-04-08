@@ -8,7 +8,8 @@ import {
   SET_EDITOR_INSTANCE,
   TOGGLE_ASDIDE_APP,
   SET_MAIN_MENU_ID,
-  SET_CANVAS_REF
+  SET_CANVAS_REF,
+  SET_AIMV_CANVAS_REF,
 } from "../actions/type";
 
 const INITIAL_STATE = {
@@ -21,7 +22,8 @@ const INITIAL_STATE = {
   editorInstance: null,
   mainMenuId: 0,
   canvasRef: null,
-  asideAppShowed: false
+  aimvCanvasRef: null,
+  asideAppShowed: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -34,6 +36,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, mainMenuId: action.payload };
     case SET_CANVAS_REF:
       return { ...state, canvasRef: action.payload };
+    case SET_AIMV_CANVAS_REF:
+      return { ...state, aimvCanvasRef: action.payload };
     case SET_ACTIVE_ASIDE_TAB:
       return { ...state, activeAsideTab: action.payload };
     case SET_SELECTED_TEMPLATE:
@@ -44,7 +48,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         hasError: action.payload.hasError,
-        error: action.payload.err
+        error: action.payload.err,
       };
     case CMN_TOGGLE_SIDER:
       return { ...state, sider_collapsed: !state.sider_collapsed };

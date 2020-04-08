@@ -8,17 +8,21 @@ import {
   SET_EDITOR_INSTANCE,
   TOGGLE_ASDIDE_APP,
   SET_MAIN_MENU_ID,
-  SET_CANVAS_REF
+  SET_CANVAS_REF,
+  SET_AIMV_CANVAS_REF
 } from "./type";
 import axios from "axios";
-import { api_url } from "../conf";
+import { api_url, api_token } from "../conf";
 // import ExtractTemplate from "../views/DataExtraction/Fields.json";
 // import IDTemplate from "../views/DataExtraction/FieldsID.json";
 
 export const getExtractTemplate = id => async dispatch => {
   try {
-    console.log(`${api_url}/api/templates/${id}`);
-    const res = await axios.get(`${api_url}/api/templates/${id}`);
+    const res = await axios.get(`${api_url}/api/templates/${id}`, {
+      headers: {
+        Authorization: `Basic ${api_token}`
+      }
+    });
     if (res.data.status === "success") {
       dispatch({ type: GET_EXTRACT_TEMPLATE, payload: res.data.data });
     } else {
@@ -31,6 +35,11 @@ export const getExtractTemplate = id => async dispatch => {
     return { success: false, err };
   }
 };
+
+export const setAimvCanvasRef = aimvCanvasRef => ({
+  type: SET_AIMV_CANVAS_REF,
+  payload: aimvCanvasRef
+});
 
 export const setCanvasRef = canvasRef => ({
   type: SET_CANVAS_REF,

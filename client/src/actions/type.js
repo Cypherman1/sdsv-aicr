@@ -10,6 +10,7 @@ export const SET_EDITOR_INSTANCE = "set_editor_instance";
 export const TOGGLE_ASDIDE_APP = "toggle_aside_app";
 export const SET_MAIN_MENU_ID = "set_main_menu_id";
 export const SET_CANVAS_REF = "set_canvas_ref";
+export const SET_AIMV_CANVAS_REF = "set_aimv_canvas_ref";
 
 //Images upload
 

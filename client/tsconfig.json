@@ -18,10 +18,7 @@
     "moduleResolution": "node",
     "target": "esnext",
     "outDir": "lib",
-    "lib": [
-      "dom",
-      "esnext"
-    ],
+    "lib": ["dom", "esnext"],
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
@@ -29,12 +26,8 @@
   },
   "include": [
     "src",
-    "src/editor/components/canvas/index.tsx",
-    "src/editor/components/canvas/global.d.ts"
+    "src/views/EditorLib/components/canvas/index.tsx",
+    "src/views/EditorLib/components/canvas/global.d.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "lib"
-  ]
+  "exclude": ["node_modules", "dist", "lib"]
 }

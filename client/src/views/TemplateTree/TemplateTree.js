@@ -8,12 +8,11 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
-import { Menu, Dropdown, Popconfirm } from "antd";
+import { Menu, Dropdown } from "antd";
 
 import FolderOpenIcon from "@material-ui/icons/FolderOpen";
 import DescriptionOutlinedIcon from "@material-ui/icons/DescriptionOutlined";
 import TemplateModal from "./TemplateModal";
-import { setTplModalVisible } from "../../actions";
 
 const useTreeItemStyles = makeStyles(theme => ({
   root: {

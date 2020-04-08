@@ -1,7 +1,5 @@
 import axios from "axios";
 import { reset } from "redux-form";
-import { listImg } from "./imgUploadActions";
-import { getExtractTemplate } from "./commonActions";
 import { api_url } from "../conf";
 import {
   LOAD_TEMPLTE_TREE,
@@ -13,10 +11,6 @@ import {
   SET_UPDATING,
   LIST_IMG,
   GET_EXTRACT_TEMPLATE,
-  ADD_NEW_TEMPLATE,
-  ADD_NEW_FOLDER,
-  REMOVE_TEMPLATE_FOLDER,
-  RENAME_TEMPLATE_FOLDER,
   SET_CURRENT_IMG
 } from "./type";
 
@@ -127,7 +121,7 @@ export const setSelected = (
         url: `${api_url}/api/images/${img.imgId}`
       }))
     });
-    // Set default current image
+    // Set current image
     dispatch({
       type: SET_CURRENT_IMG,
       payload:
@@ -147,12 +141,11 @@ export const setSelected = (
     }
     if (common.mainMenuId === 1) {
       // Set default current image
-      if (common.editorInstance) {
-        await common.editorInstance.loadImageFromURL(
+      if (common.aimvCanvasRef) {
+        await common.aimvCanvasRef.handler.workareaHandler.setImage(
           imgs.length === 0
             ? "./assets/img/no-image.png"
-            : `${api_url}/api/images/${imgs.data[0].imgId}`,
-          "noimg"
+            : `${api_url}/api/images/${res1.data.data.image_source}`
         );
       }
       //Reset extracted form
